@@ -1,7 +1,6 @@
 package com.javarevolutions.ws.rest.service;
 
 import java.util.ArrayList;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -36,7 +35,6 @@ public class ServiceLoginJR {
 	public String ini() {
 		return "inicializado con exito";
 	}
-	
 	
 	@GET
 	@Path("/validaUsuario")
