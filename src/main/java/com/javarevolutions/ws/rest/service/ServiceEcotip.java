@@ -32,10 +32,10 @@ public class ServiceEcotip {
 		myObject = new JSONObject(); 
 		myObject.put("id", e.getId());
         myObject.put("descripcio", e.getDescripcio());
-		return myObject;	
-		/*Queries q = new Queries(); 
-        JSONObject j =  q.insertEcotip(id); 
-        return j;  */
+		return myObject;
+		/* Queries q = new Queries(); 
+		 * String insert = q.insertUser(vo)
+		 */
 	}
 	
 	@GET

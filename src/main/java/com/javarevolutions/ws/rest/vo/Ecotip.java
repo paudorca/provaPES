@@ -1,21 +1,16 @@
 package com.javarevolutions.ws.rest.vo;
 import java.sql.Array;
+
 import java.util.ArrayList;
 
 public class Ecotip {
-	private int id;
+	private String id;
 	private String descripcio;
-	//private ArrayList<Pregunta> preguntes;
-	//private ArrayList<Image> imatges; 
-	
-	public Ecotip (int id) {
-		this.id = id; 
-	}
 
-	public int getId() {
+	public String getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getDescripcio() {

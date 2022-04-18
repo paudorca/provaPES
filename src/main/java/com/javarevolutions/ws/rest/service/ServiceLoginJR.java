@@ -25,7 +25,7 @@ public class ServiceLoginJR {
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject setUsuario(VOUsuario vo) throws JSONException {
 		myObject = new JSONObject(); 
-		myObject.put("name", vo.getUsuario());
+		myObject.put("usuario", vo.getUsuario());
         myObject.put("password", vo.getPassword());
 		return myObject;
 		/* Queries q = new Queries(); 
