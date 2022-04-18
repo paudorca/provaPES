@@ -13,14 +13,14 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
-@Path("/demo")
+@Path("/users")
 public class ServiceLoginJR {
 	
 	ArrayList<VOUsuario> lista; 
 	JSONObject myObject; 
 	
 	@POST
-	@Path("/setUsuario")
+	@Path("/createUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject setUsuario(VOUsuario vo) throws JSONException {
@@ -28,6 +28,9 @@ public class ServiceLoginJR {
 		myObject.put("name", vo.getUsuario());
         myObject.put("password", vo.getPassword());
 		return myObject;
+		/* Queries q = new Queries(); 
+		 * String insert = q.insertUser(vo)
+		 */
 	}
 	
 	@GET
