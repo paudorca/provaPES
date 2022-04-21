@@ -38,6 +38,10 @@ public class Database {
 		}
 	}
 	
+	public Connection getConnection() {
+		return conn; 
+	}
+	
 	public ResultSet query(String query) {
 		try {
 			

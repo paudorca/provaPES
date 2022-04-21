@@ -18,7 +18,6 @@ import com.javarevolutions.ws.rest.database.Queries;
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
-
 @Path("/ecotips")
 public class ServiceEcotip {
 	
