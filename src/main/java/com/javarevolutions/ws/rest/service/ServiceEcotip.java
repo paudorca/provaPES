@@ -44,6 +44,7 @@ public class ServiceEcotip {
         return Response.ok(id).build();
         /*Queries q = new Queries(); 
         JSONObject j =  q.getEcotip(id); 
+        
         return j;  */
     }
 }
