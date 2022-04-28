@@ -26,6 +26,13 @@ public class Database {
 	
 	private void connect() {
 		
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc");
+		} catch (ClassNotFoundException e1) {
+			
+			e1.printStackTrace();
+		}
 		String url = "jdbc:mysql://localhost:3306/HomiesApp";
 		String username = "homies.admin";
 		String password = "homies.SQL";
@@ -36,6 +43,7 @@ public class Database {
 		} catch (SQLException e) {
 		    throw new IllegalStateException("Cannot connect the database!", e);
 		}
+		
 	}
 	
 	public Connection getConnection() {

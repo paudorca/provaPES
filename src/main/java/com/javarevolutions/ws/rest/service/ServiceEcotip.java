@@ -47,4 +47,20 @@ public class ServiceEcotip {
         
         return j;  */
     }
+	
+	
+	@GET
+    @Path("/prova")
+	@Produces({MediaType.APPLICATION_JSON})
+    public Response prova() {
+		
+		Queries q = new Queries(); 
+        String prova =  q.getProva(); 
+		
+        return Response.ok(prova).build();
+        /*Queries q = new Queries(); 
+        JSONObject j =  q.getEcotip(id); 
+        
+        return j;  */
+	}
 }

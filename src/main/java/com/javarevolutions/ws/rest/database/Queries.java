@@ -46,4 +46,18 @@ public class Queries {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getProva() {
+		
+		Database db = Database.getInstance();
+		String query = "SELECT * FROM Usuari WHERE id = 1 ";
+		
+		ResultSet rs = db.query(query);
+		try {
+			return rs.getString("email");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "fail";
+		}
+	}
 }
