@@ -12,9 +12,6 @@ public class Database {
 	private String url= "jdbc:mysql://localhost:3306/HomiesApp";
 	private String username = "homies.admin";
 	private String password  = "homies.SQL";
-	
-	public Database() {
-	}
 
 	public static Database getInstance() {
 
