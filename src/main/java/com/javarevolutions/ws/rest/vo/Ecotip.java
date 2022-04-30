@@ -4,14 +4,14 @@ import java.sql.Array;
 import java.util.ArrayList;
 
 public class Ecotip {
-	private String id;
+	private int id;
 	private String titol;
 	private String text;
 
-	public String getId() {
+	public int getId() {
 		return this.id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getTitol() {

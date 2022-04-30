@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.javarevolutions.ws.rest.database.Queries;
+import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
@@ -32,8 +32,8 @@ public class ServiceEcotip {
 		myObject.put("id", e.getId());
         myObject.put("descripcio", e.getText());
         
-        Queries q = Queries.getInstance();
-        q.insertEcotip(e);
+        Database db = Database.getInstance();
+        db.insertEcotip(e);
 		return myObject;
 	}
 	
@@ -41,12 +41,11 @@ public class ServiceEcotip {
     @Path("/getEcotip/{id}")
 	@Produces({MediaType.APPLICATION_JSON})
     public Response getEcotip(@PathParam("id") String id) {
-        Queries q = Queries.getInstance();
-        Ecotip e = new Ecotip();
-        e.setId(id);
-        /*JSONObject j = */ q.getEcotip(e); 
+        Database db = Database.getInstance();
+        Ecotip e = db.getEcotip(Integer.parseInt(id));
+        /*JSONObject j = */
         
         //return j;  
-        return Response.ok(id).build();
+        return Response.ok(e.getTitol()).build();
     }
 }
