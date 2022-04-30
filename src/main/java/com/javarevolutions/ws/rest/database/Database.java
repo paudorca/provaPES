@@ -9,10 +9,14 @@ import java.sql.Statement;
 public class Database {
 	
 	private static Database dbObject;
-	private Connection conn;
+	String url;
+	String username;
+	String password;
 	
 	public Database() {
-		connect();
+		url = "jdbc:mysql://localhost:3306/HomiesApp";
+		username = "homies.admin";
+		password = "homies.SQL";
 	}
 
 	public static Database getInstance() {
@@ -20,65 +24,53 @@ public class Database {
 		if(dbObject == null) {
 			dbObject = new Database();
 		}
-		
 		return dbObject;
-	}
-	
-	private void connect() {
-		
-		
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc");
-		} catch (ClassNotFoundException e1) {
-			
-			e1.printStackTrace();
-		}
-		String url = "jdbc:mysql://localhost:3306/HomiesApp";
-		String username = "homies.admin";
-		String password = "homies.SQL";
-		
-		try (Connection c = DriverManager.getConnection(url, username, password)) {
-		    System.out.println("Database connected!");
-		    conn = c;
-		} catch (SQLException e) {
-		    throw new IllegalStateException("Cannot connect the database!", e);
-		}
-		
-	}
-	
-	public Connection getConnection() {
-		return conn; 
-	}
+	}	
 	
 	public ResultSet query(String query) {
+		
 		try {
-			
-		    Statement stmt = conn.createStatement();
-		    ResultSet rs = stmt.executeQuery(query);
-		    
-		    return rs;
-		}
-		catch (SQLException ex){
-		    // handle any errors
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
+			Class.forName("com.mysql.cj.jdbc.Driver");		
+			try {
+				Connection ConnTry = DriverManager.getConnection(url, username, password);
+			    Statement stmt = ConnTry.createStatement();
+			    ResultSet rs = stmt.executeQuery(query);
+			    			    
+			    return rs;
+			}
+			catch (SQLException ex){
+			    // handle any errors
+			    System.out.println("SQLException: " + ex.getMessage());
+			    System.out.println("SQLState: " + ex.getSQLState());
+			    System.out.println("VendorError: " + ex.getErrorCode());
+			}
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
+	
 	}
 	
 	public void update(String query) {
 		try {
-			
-		    Statement stmt = conn.createStatement();
-		    stmt.executeUpdate(query);
-		    
-		}
-		catch (SQLException ex){
-		    // handle any errors
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
+			Class.forName("com.mysql.cj.jdbc.Driver");		
+			try {
+				Connection ConnTry = DriverManager.getConnection(url, username, password);
+			    Statement stmt = ConnTry.createStatement();
+			    stmt.executeUpdate(query);
+			}
+			catch (SQLException ex){
+			    // handle any errors
+			    System.out.println("SQLException: " + ex.getMessage());
+			    System.out.println("SQLState: " + ex.getSQLState());
+			    System.out.println("VendorError: " + ex.getErrorCode());
+			}
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
