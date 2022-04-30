@@ -9,6 +9,16 @@ import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 public class Queries {
 
+	private static Queries qObject;
+	
+	public static Queries getInstance() {
+
+		if(qObject == null) {
+			qObject = new Queries();
+		}
+		return qObject;
+	}	
+	
 	public void getEcotip(Ecotip ecotip) {
 		
 		Database db = Database.getInstance();
@@ -17,14 +27,17 @@ public class Queries {
 		ResultSet rs = db.query(query);
 		
 		try {
-			ecotip.setDescripcio(rs.getString("contingut"));
+			rs.next();
+			ecotip.setTitol(rs.getString("titol"));
+			ecotip.setText(rs.getString("contingut"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void insertEcotip() {
-		//insertar ecotip a la BD 
+	public void insertEcotip(Ecotip e) {
+		Database db = Database.getInstance();
+		String query = "INSERT INTO Ecotips VALUES (id = " + e.getId() + ", titol = '" + e.getTitol() + "', data_publ = null, contingut = '"+ e.getText() +"';";
 	}
 	
 	public void getOferta(Oferta oferta) {
@@ -44,20 +57,6 @@ public class Queries {
 			user.setEdad(rs.getInt("edat"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	public String getProva() {
-		
-		Database db = Database.getInstance();
-		String query = "SELECT * FROM Usuari WHERE id = 1 ";
-		
-		ResultSet rs = db.query(query);
-		try {
-			return rs.getString("email");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "fail";
 		}
 	}
 }

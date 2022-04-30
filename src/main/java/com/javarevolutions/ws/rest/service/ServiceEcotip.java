@@ -30,37 +30,23 @@ public class ServiceEcotip {
 	public JSONObject setUsuario(Ecotip e) throws JSONException {
 		myObject = new JSONObject(); 
 		myObject.put("id", e.getId());
-        myObject.put("descripcio", e.getDescripcio());
+        myObject.put("descripcio", e.getText());
+        
+        Queries q = Queries.getInstance();
+        q.insertEcotip(e);
 		return myObject;
-		/* Queries q = new Queries(); 
-		 * String insert = q.insertUser(vo)
-		 */
 	}
 	
 	@GET
     @Path("/getEcotip/{id}")
 	@Produces({MediaType.APPLICATION_JSON})
     public Response getEcotip(@PathParam("id") String id) {
+        Queries q = Queries.getInstance();
+        Ecotip e = new Ecotip();
+        e.setId(id);
+        /*JSONObject j = */ q.getEcotip(e); 
+        
+        //return j;  
         return Response.ok(id).build();
-        /*Queries q = new Queries(); 
-        JSONObject j =  q.getEcotip(id); 
-        
-        return j;  */
     }
-	
-	
-	@GET
-    @Path("/prova")
-	@Produces({MediaType.APPLICATION_JSON})
-    public Response prova() {
-		
-		Queries q = new Queries(); 
-        String prova =  q.getProva(); 
-		
-        return Response.ok(prova).build();
-        /*Queries q = new Queries(); 
-        JSONObject j =  q.getEcotip(id); 
-        
-        return j;  */
-	}
 }

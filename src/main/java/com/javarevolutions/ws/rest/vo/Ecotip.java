@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 public class Ecotip {
 	private String id;
-	private String descripcio;
+	private String titol;
+	private String text;
 
 	public String getId() {
 		return this.id;
@@ -13,11 +14,17 @@ public class Ecotip {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getDescripcio() {
-		return this.descripcio;
+	public String getTitol() {
+		return this.titol;
 	}
-	public void setDescripcio(String desc) {
-		this.descripcio = desc;
+	public void setTitol(String titol) {
+		this.titol = titol;
+	}
+	public String getText() {
+		return this.text;
+	}
+	public void setText(String text) {
+		this.text = text;
 	}
 }
 	

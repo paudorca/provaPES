@@ -9,14 +9,11 @@ import java.sql.Statement;
 public class Database {
 	
 	private static Database dbObject;
-	String url;
-	String username;
-	String password;
+	private String url= "jdbc:mysql://localhost:3306/HomiesApp";
+	private String username = "homies.admin";
+	private String password  = "homies.SQL";
 	
 	public Database() {
-		url = "jdbc:mysql://localhost:3306/HomiesApp";
-		username = "homies.admin";
-		password = "homies.SQL";
 	}
 
 	public static Database getInstance() {
