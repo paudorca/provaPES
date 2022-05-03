@@ -30,8 +30,8 @@ public class Ecotip {
 	public int getQuiz() {
 		return idQuiz;
 	}
-	public void setQuiz(Quiz quiz) {
-		this.quiz = quiz;
+	public void setQuiz(int idQuiz) {
+		this.idQuiz = idQuiz;
 	}
 }
 	
