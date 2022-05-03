@@ -27,10 +27,14 @@ public class ServiceEcotip {
 	@GET
     @Path("/getEcotip/{id}")
 	@Produces({MediaType.APPLICATION_JSON})
-    public Response getEcotip(@PathParam("id") String id) {
+    public JSONObject getEcotip(@PathParam("id") String id) throws JSONException {
         Database db = Database.getInstance();
         Ecotip e = db.getEcotip(Integer.parseInt(id));
-        return Response.ok(e.getTitol()).build();
+        JSONObject json = new JSONObject(); 
+        json.put("titol",e.getTitol()); 
+        json.put("text", e.getText()); 
+        json.put("idQuiz",e.getQuiz()); 
+        return json;
     }
 	
 	@GET

@@ -127,7 +127,7 @@ public class Database {
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
 		update(query);
 	}
-
+	
 	public Quiz getQuiz(int idQuiz) {
 		// TODO Auto-generated method stub
 		return null;
