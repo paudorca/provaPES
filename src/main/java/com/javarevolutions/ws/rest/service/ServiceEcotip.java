@@ -16,27 +16,13 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.vo.Ecotip;
+import com.javarevolutions.ws.rest.vo.Quiz;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/ecotips")
 public class ServiceEcotip {
 	
 	JSONObject myObject;
-	
-	@POST
-	@Path("/createEcotip")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject setUsuario(Ecotip e) throws JSONException {
-		/*myObject = new JSONObject(); 
-		myObject.put("id", e.getId());
-        myObject.put("descripcio", e.getText());
-        
-        Database db = Database.getInstance();
-        db.insertEcotip(e);
-		return myObject;*/
-		
-	}
 	
 	@GET
     @Path("/getEcotip/{id}")
@@ -48,11 +34,11 @@ public class ServiceEcotip {
     }
 	
 	@GET
-    @Path("/getQuiz/{titol}")
+    @Path("/getQuiz/{idQuiz}")
 	@Produces({MediaType.APPLICATION_JSON})
-    public JSON getQuiz(@PathParam("titol") String titol) {
+    public Response getQuiz(@PathParam("idQuiz") int idQuiz) {
         Database db = Database.getInstance();
-        db.getQuiz(titol);
+        Quiz q = db.getQuiz(idQuiz);
         return Response.ok("done").build();
     }
 }

@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
+import com.javarevolutions.ws.rest.vo.Quiz;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 public class Database {
@@ -125,5 +126,10 @@ public class Database {
 		update(query);
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
 		update(query);
+	}
+
+	public Quiz getQuiz(int idQuiz) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
