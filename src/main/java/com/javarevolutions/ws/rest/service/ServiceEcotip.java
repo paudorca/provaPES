@@ -38,7 +38,9 @@ public class ServiceEcotip {
 	@Produces({MediaType.APPLICATION_JSON})
     public Response getQuiz(@PathParam("idQuiz") int idQuiz) {
         Database db = Database.getInstance();
-        Quiz q = db.getQuiz(idQuiz);
+        Quiz q = new Quiz();
+		q.setId(idQuiz);
+		q.setPreguntes(db.getPreguntes(idQuiz));
         return Response.ok("done").build();
     }
 }
