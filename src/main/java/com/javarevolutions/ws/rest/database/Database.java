@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
+import com.javarevolutions.ws.rest.vo.Pregunta;
 import com.javarevolutions.ws.rest.vo.Quiz;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
@@ -59,6 +61,7 @@ public class Database {
 				Connection ConnTry = DriverManager.getConnection(url, username, password);
 			    Statement stmt = ConnTry.createStatement();
 			    stmt.executeUpdate(query);
+			    ConnTry.commit();
 			}
 			catch (SQLException ex){
 			    // handle any errors
@@ -100,10 +103,11 @@ public class Database {
 	
 	//Usuari
 	public VOUsuario getUsuari(VOUsuario user) {
-		String query = "SELECT * FROM Usuari WHERE email = " + user.getEmail();
+		String query = "SELECT * FROM Usuari WHERE email = '" + user.getEmail() + "';";
 		
 		ResultSet rs = query(query);
 		try {
+			rs.next();
 			user.setNom(rs.getString("nom"));
 			user.setEdad(rs.getInt("edat"));
 			return user;
@@ -127,9 +131,12 @@ public class Database {
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
 		update(query);
 	}
-	
-	public Quiz getQuiz(int idQuiz) {
-		// TODO Auto-generated method stub
+
+	public ArrayList<Pregunta> getPreguntes(int idQuiz) {
+		
+		//A l'arraylist puc fer preguntes.add i get(x)
+		ArrayList<Pregunta> preguntes;
+		
 		return null;
 	}
 }
