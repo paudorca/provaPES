@@ -8,6 +8,12 @@ public class VOUsuario {
 	private boolean userValido;
 	private String email; 
 	
+	public VOUsuario(String nom, String email, String password) {
+		this.nom = nom; 
+		this.email = email; 
+		this.password = password; 
+	}
+	
 	public String getUsuario() {
 		return usuario;
 	}

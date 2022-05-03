@@ -28,13 +28,14 @@ public class ServiceEcotip {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject setUsuario(Ecotip e) throws JSONException {
-		myObject = new JSONObject(); 
+		/*myObject = new JSONObject(); 
 		myObject.put("id", e.getId());
         myObject.put("descripcio", e.getText());
         
         Database db = Database.getInstance();
         db.insertEcotip(e);
-		return myObject;
+		return myObject;*/
+		
 	}
 	
 	@GET
@@ -43,9 +44,6 @@ public class ServiceEcotip {
     public Response getEcotip(@PathParam("id") String id) {
         Database db = Database.getInstance();
         Ecotip e = db.getEcotip(Integer.parseInt(id));
-        /*JSONObject j = */
-        
-        //return j;  
         return Response.ok(e.getTitol()).build();
     }
 }

@@ -1,0 +1,9 @@
+com/javarevolutions/ws/rest/vo/Ecotip.class
+com/javarevolutions/ws/rest/vo/VOUsuario.class
+com/javarevolutions/ws/rest/database/Queries.class
+com/javarevolutions/ws/rest/service/ServiceImage.class
+com/javarevolutions/ws/rest/service/ServiceEcotip.class
+com/javarevolutions/ws/rest/vo/Image.class
+com/javarevolutions/ws/rest/vo/Oferta.class
+com/javarevolutions/ws/rest/database/Database.class
+com/javarevolutions/ws/rest/service/ServiceLoginJR.class

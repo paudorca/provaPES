@@ -13,42 +13,51 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.javarevolutions.ws.rest.database.Database;
-import com.javarevolutions.ws.rest.vo.Ecotip;
+import com.javarevolutions.ws.rest.database.Queries;
+import com.javarevolutions.ws.rest.vo.Like;
+import com.javarevolutions.ws.rest.vo.Match;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
-@Path("/users")
-public class ServiceLoginJR {
-	
-	ArrayList<VOUsuario> lista; 
-	JSONObject myObject; 
+@Path("/oferta")
+public class ServiceOferta {
 	
 	@POST
-	@Path("/createUser")
+	@Path("/createOferta")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject setUsuario(VOUsuario vo) throws JSONException {
+	public Response setUsuario(VOUsuario vo) throws JSONException {
 		myObject = new JSONObject(); 
 		myObject.put("usuario", vo.getUsuario());
         myObject.put("password", vo.getPassword());
-		return myObject;
-		/* Queries q = new Queries(); 
-		 * String insert = q.insertUser(vo)
-		 */
+        Queries q = new Queries(); 
+		String result = q.createUser(vo);
+        return Response.ok(result).build();
 	}
 	
 	@POST
-	@Path("/createUser")
+	@Path("/addMatch")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response createUser(JSONObject json) throws JSONException {
-		Database db = Database.getInstance();
-		String nom = json.getString("nom");
-		String email = json.getString("email");
-		String contrasenya = json.getString("contrasenya");
-		VOUsuario user = new VOUsuario(nom,email,contrasenya); 
-        db.createUser(user);
-        return Response.ok("done").build();
+	public Response addMatch(Match m) throws JSONException {
+		myObject = new JSONObject(); 
+		myObject.put("usuario1", m.getUsuari1());
+        myObject.put("usuario2", m.getUsuari2());
+		Queries q = new Queries(); 
+		String result = q.addMatch(m);
+        return Response.ok(result).build();
+	}
+	
+	@POST
+	@Path("/addLike")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response addLike(Like l) throws JSONException {
+		myObject = new JSONObject(); 
+		myObject.put("usuario1", l.getUsuari1());
+        myObject.put("usuario2", l.getUsuari2());
+		Queries q = new Queries(); 
+		String result = q.addLike(l);
+        return Response.ok(result).build();
 	}
 	
 	@POST
@@ -83,6 +92,16 @@ public class ServiceLoginJR {
 		myObject = new JSONObject(); 
 		return "Prueba";
 	}
+	
+	@GET
+    @Path("/getUsuari/{email}")
+	@Produces({MediaType.APPLICATION_JSON})
+    public Response getEcotip(@PathParam("email") String email) {
+        Queries q = new Queries();
+        VOUsuario u = new VOUsuario(email); 
+        q.getUsuari(u); 
+        return Response.ok(u).build();
+    }
 	
 	@GET
 	@Path("/todos")
