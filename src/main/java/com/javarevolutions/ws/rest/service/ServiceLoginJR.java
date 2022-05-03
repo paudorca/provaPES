@@ -27,27 +27,16 @@ public class ServiceLoginJR {
 	@Path("/createUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject setUsuario(VOUsuario vo) throws JSONException {
-		myObject = new JSONObject(); 
-		myObject.put("usuario", vo.getUsuario());
-        myObject.put("password", vo.getPassword());
-		return myObject;
-		/* Queries q = new Queries(); 
-		 * String insert = q.insertUser(vo)
-		 */
-	}
-	
-	@POST
-	@Path("/createUser")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
 	public Response createUser(JSONObject json) throws JSONException {
+		
 		Database db = Database.getInstance();
 		String nom = json.getString("nom");
 		String email = json.getString("email");
 		String contrasenya = json.getString("contrasenya");
-		VOUsuario user = new VOUsuario(nom,email,contrasenya); 
+		VOUsuario user = new VOUsuario(nom,email,contrasenya);
+		user.setEdad(json.getInt("edat"));
         db.createUser(user);
+        
         return Response.ok("done").build();
 	}
 	

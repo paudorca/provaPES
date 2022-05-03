@@ -98,15 +98,17 @@ public class Database {
 	}
 	
 	//Usuari
-	public void getUsuari(VOUsuario user) {
+	public VOUsuario getUsuari(VOUsuario user) {
 		String query = "SELECT * FROM Usuari WHERE email = " + user.getEmail();
 		
 		ResultSet rs = query(query);
 		try {
 			user.setNom(rs.getString("nom"));
 			user.setEdad(rs.getInt("edat"));
+			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 	
@@ -116,5 +118,12 @@ public class Database {
 		
 		ResultSet rs = query(query);
 		//Tractar resultset
+	}
+
+	public void createUser(VOUsuario user) {
+		String query = "INSERT INTO Usuari (nom, email, edat) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +";";
+		update(query);
+		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
+		update(query);
 	}
 }
