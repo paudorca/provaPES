@@ -46,4 +46,13 @@ public class ServiceEcotip {
         Ecotip e = db.getEcotip(Integer.parseInt(id));
         return Response.ok(e.getTitol()).build();
     }
+	
+	@GET
+    @Path("/getQuiz/{titol}")
+	@Produces({MediaType.APPLICATION_JSON})
+    public JSON getQuiz(@PathParam("titol") String titol) {
+        Database db = Database.getInstance();
+        db.getQuiz(titol);
+        return Response.ok("done").build();
+    }
 }

@@ -7,6 +7,7 @@ public class Ecotip {
 	private int id;
 	private String titol;
 	private String text;
+	private int idQuiz;
 
 	public int getId() {
 		return this.id;
@@ -25,6 +26,12 @@ public class Ecotip {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	public int getQuiz() {
+		return idQuiz;
+	}
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
 	}
 }
 	

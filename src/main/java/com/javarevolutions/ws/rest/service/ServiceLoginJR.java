@@ -51,6 +51,8 @@ public class ServiceLoginJR {
         return Response.ok("done").build();
 	}
 	
+	
+	
 	@POST
 	@Path("/preferencies")
 	@Consumes({MediaType.APPLICATION_JSON})
