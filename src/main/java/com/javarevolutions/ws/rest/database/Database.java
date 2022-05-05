@@ -105,9 +105,10 @@ public class Database {
 	}
 	
 	//Usuari
-	public VOUsuario getUsuari(VOUsuario user) {
-		String query = "SELECT * FROM Usuari WHERE email = '" + user.getEmail() + "';";
-		
+	public VOUsuario getUsuari(String email) {
+		String query = "SELECT * FROM Usuari WHERE email = '" + email + "';";
+		VOUsuario user = new VOUsuario();
+		user.setEmail(email);
 		ResultSet rs = query(query);
 		try {
 			rs.next();
@@ -128,10 +129,10 @@ public class Database {
 		//Tractar resultset
 	}
 
-	public int createUser(VOUsuario user) {
+	public int createUser(VOUsuario user, String contrasenya) {
 		String query = "INSERT INTO Usuari (nom, email, edat) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
 		update(query);
-		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
+		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
 		return update(query);
 	}
 	

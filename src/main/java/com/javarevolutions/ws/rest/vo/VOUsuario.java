@@ -3,21 +3,18 @@ package com.javarevolutions.ws.rest.vo;
 public class VOUsuario {
 	private String usuario; 
 	private String nom; 
-	private int edad; 
-	private String password; 
+	private int edad;
 	private boolean userValido;
 	private String email;
 	
 	public VOUsuario() {
 		this.nom = null; 
 		this.email = null; 
-		this.password = null; 
 	}
 	
-	public VOUsuario(String nom, String email, String password) {
+	public VOUsuario(String nom, String email) {
 		this.nom = nom; 
 		this.email = email; 
-		this.password = password; 
 	}
 	
 	public String getUsuario() {
@@ -29,12 +26,6 @@ public class VOUsuario {
 	}
 	public int getEdad() {
 		return edad; 
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public boolean isUserValido() {
 		return userValido;
