@@ -41,43 +41,44 @@ public class ServiceLoginJR {
 	}
 	
 	
-	
 	@POST
-	@Path("/preferencies")
+	@Path("/setGustosPersonals")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public int setGustosPersonals() throws JSONException {
-		return 1;
-		/* Queries q = new Queries(); 
-		 * String insert = q.insertaGustosUsuari()
-		 */
+	public Response setGustosPersonals(JSONObject json) throws JSONException {
+		return Response.ok("proba").build(); 
+		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
 	}
 	
 	@GET
-	@Path("/getGustosUsuari/{idUsuari}")
-	public Response getGustosPersonals(@PathParam("idUsuari") String idUsuari) {
-		return null;
-        /*Queries q = new Queries(); 
-        JSONObject j =  q.getGustosPersonals(id); 
-        return j;  */
+	@Path("/getGustosPersonals/{idUsuari}")
+	public JSONObject getGustosPersonals(@PathParam("idUsuari") String idUsuari) {
+		JSONObject json = new JSONObject();
+		//crida a una nova clase, que encara he de implementar 
+		return json; 
     }
 	
 	@GET
-	@Path("/inicializa")
-	public String ini() {
-		return "inicializado con exito";
-	}
+	@Path("/getUsuari/{email}")
+	public Response getUsuari(@PathParam("email") String email) {
+		Database db = Database.getInstance();
+		VOUsuario user = new VOUsuario(); 
+		user.setEmail(email); 
+		db.getUsuari(user); 
+		return Response.ok(user).build(); 
+    }
 	
 	@GET
-	@Path("/validaUsuario")
-	public String validaUsuario() {
-		myObject = new JSONObject(); 
-		return "Prueba";
-	}
+	@Path("/getPreferenciesUsuari/{idUsuari}")
+	public Response getPreferenciesUsuari(@PathParam("idUsuari") String idUsuari) {
+		return Response.ok("proba").build(); 
+		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
+    }
 	
+	//de prova per comprobar la conexio
 	@GET
 	@Path("/todos")
-	public String damelos() throws JSONException {
-		return "hola";
+	public Response damelos() throws JSONException {
+		return Response.ok("hola").build();
 	}
 }
