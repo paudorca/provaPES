@@ -53,8 +53,7 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		output.put("resposta",db.deleteUsuari(email));
 		
-		return output; 
-		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
+		return output;
 	}
 	
 	@POST
