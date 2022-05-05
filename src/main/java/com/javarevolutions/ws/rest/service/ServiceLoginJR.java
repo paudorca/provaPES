@@ -42,6 +42,20 @@ public class ServiceLoginJR {
         return output; 
 	}
 	
+	@GET
+	@Path("/getUsuari/{email}")
+	public JSONObject getUsuari(@PathParam("email") String email) throws JSONException {
+		JSONObject output = new JSONObject(); 
+		Database db = Database.getInstance();
+		VOUsuario user = new VOUsuario();
+		user = db.getUsuari(email); 
+		output.put("email", user.getEmail()); 
+		output.put("nom", user.getNom()); 
+		output.put("edat", user.getEdad()); 
+		
+		return output; 
+    }
+	
 	@POST
 	@Path("/deleteUser/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -71,20 +85,6 @@ public class ServiceLoginJR {
 		JSONObject json = new JSONObject();
 		//crida a una nova clase, que encara he de implementar 
 		return json; 
-    }
-	
-	@GET
-	@Path("/getUsuari/{email}")
-	public JSONObject getUsuari(@PathParam("email") String email) throws JSONException {
-		JSONObject output = new JSONObject(); 
-		Database db = Database.getInstance();
-		VOUsuario user = new VOUsuario();
-		user = db.getUsuari(email); 
-		output.put("email", user.getEmail()); 
-		output.put("nom", user.getNom()); 
-		output.put("edat", user.getEdad()); 
-		
-		return output; 
     }
 	
 	@GET
