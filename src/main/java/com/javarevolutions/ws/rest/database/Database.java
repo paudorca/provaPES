@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
 import com.javarevolutions.ws.rest.vo.Pregunta;
-import com.javarevolutions.ws.rest.vo.Quiz;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 public class Database {
@@ -127,6 +126,12 @@ public class Database {
 		
 		ResultSet rs = query(query);
 		//Tractar resultset
+		try {
+			rs.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public int createUser(VOUsuario user, String contrasenya) {
@@ -148,8 +153,8 @@ public class Database {
 	public ArrayList<Pregunta> getPreguntes(int idQuiz) {
 		
 		//A l'arraylist puc fer preguntes.add i get(x)
-		ArrayList<Pregunta> preguntes;
+		ArrayList<Pregunta> preguntes = new ArrayList<Pregunta>();
 		
-		return null;
+		return preguntes;
 	}
 }

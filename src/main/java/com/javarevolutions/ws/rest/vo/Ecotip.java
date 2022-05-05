@@ -1,7 +1,4 @@
 package com.javarevolutions.ws.rest.vo;
-import java.sql.Array;
-
-import java.util.ArrayList;
 
 public class Ecotip {
 	private int id;

@@ -1,10 +1,6 @@
 package com.javarevolutions.ws.rest.service; 
 
-import java.util.ArrayList;
-
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,7 +13,6 @@ import org.codehaus.jettison.json.JSONObject;
 import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Quiz;
-import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/ecotips")
 public class ServiceEcotip {

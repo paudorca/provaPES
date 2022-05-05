@@ -14,7 +14,6 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.database.Database;
-import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/users")
@@ -30,12 +29,14 @@ public class ServiceLoginJR {
 	public JSONObject createUser(JSONObject json) throws JSONException {
 		
 		JSONObject output = new JSONObject(); 
-		
 		Database db = Database.getInstance();
+		
 		String nom = json.getString("nom");
 		String email = json.getString("email");
 		String contrasenya = json.getString("contrasenya");
+		
 		VOUsuario user = new VOUsuario(nom,email);
+		
 		user.setEdad(json.getInt("edat"));
 		output.put("resposta",db.createUser(user, contrasenya));
         
@@ -47,8 +48,9 @@ public class ServiceLoginJR {
 	public JSONObject getUsuari(@PathParam("email") String email) throws JSONException {
 		JSONObject output = new JSONObject(); 
 		Database db = Database.getInstance();
-		VOUsuario user = new VOUsuario();
-		user = db.getUsuari(email); 
+		
+		VOUsuario user = db.getUsuari(email);
+		
 		output.put("email", user.getEmail()); 
 		output.put("nom", user.getNom()); 
 		output.put("edat", user.getEdad()); 
