@@ -6,7 +6,13 @@ public class VOUsuario {
 	private int edad; 
 	private String password; 
 	private boolean userValido;
-	private String email; 
+	private String email;
+	
+	public VOUsuario() {
+		this.nom = null; 
+		this.email = null; 
+		this.password = null; 
+	}
 	
 	public VOUsuario(String nom, String email, String password) {
 		this.nom = nom; 
@@ -47,5 +53,8 @@ public class VOUsuario {
 	public void setEdad(int edad) {
 		this.edad = edad; 
 		
-	} 
+	}
+	public void setEmail(String email) {
+		this.email = email; 
+	}
 }
