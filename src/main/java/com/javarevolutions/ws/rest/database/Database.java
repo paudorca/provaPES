@@ -134,6 +134,15 @@ public class Database {
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
 		return update(query);
 	}
+	
+	public int deleteUsuari(String email) {
+		
+		
+		String query = "DELETE FROM Passwords WHERE email = '" + email + "';";
+		update(query);
+		query = "DELETE FROM Usuari WHERE email = '" + email + "';";
+		return update(query);
+	}
 
 	public ArrayList<Pregunta> getPreguntes(int idQuiz) {
 		

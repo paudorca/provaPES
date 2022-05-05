@@ -37,7 +37,7 @@ public class ServiceLoginJR {
 		String contrasenya = json.getString("contrasenya");
 		VOUsuario user = new VOUsuario(nom,email,contrasenya);
 		user.setEdad(json.getInt("edat"));
-		output.put("resposta",db.createUser(user))
+		output.put("resposta",db.createUser(user));
         
         return output; 
 	}
@@ -46,8 +46,14 @@ public class ServiceLoginJR {
 	@Path("/deleteUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response setGustosPersonals(JSONObject json) throws JSONException {
-		return Response.ok("proba").build(); 
+	public JSONObject deleteUser(JSONObject json) throws JSONException {
+		
+		JSONObject output = new JSONObject();
+		
+		Database db = Database.getInstance();
+		output.put("resposta",db.deleteUsuari(json.getString("email")));
+		
+		return output; 
 		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
 	}
 	
