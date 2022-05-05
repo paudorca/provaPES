@@ -54,25 +54,28 @@ public class Database {
 	
 	}
 	
-	public void update(String query) {
+	public int update(String query) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");		
 			try {
 				Connection ConnTry = DriverManager.getConnection(url, username, password);
 			    Statement stmt = ConnTry.createStatement();
-			    stmt.executeUpdate(query);
-			    ConnTry.commit();
+			    int x = stmt.executeUpdate(query);
+			    //ConnTry.commit();
+			    return x;
 			}
 			catch (SQLException ex){
 			    // handle any errors
-			    System.out.println("SQLException: " + ex.getMessage());
+				System.out.println("SQLException: " + ex.getMessage());
 			    System.out.println("SQLState: " + ex.getSQLState());
 			    System.out.println("VendorError: " + ex.getErrorCode());
+			    return -1;
 			}
 		} 
 		catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -2;
 		}
 	}
 	
@@ -125,11 +128,11 @@ public class Database {
 		//Tractar resultset
 	}
 
-	public void createUser(VOUsuario user) {
-		String query = "INSERT INTO Usuari (nom, email, edat) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +";";
+	public int createUser(VOUsuario user) {
+		String query = "INSERT INTO Usuari (nom, email, edat) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
 		update(query);
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + user.getPassword() + "');";
-		update(query);
+		return update(query);
 	}
 
 	public ArrayList<Pregunta> getPreguntes(int idQuiz) {

@@ -35,9 +35,9 @@ public class ServiceLoginJR {
 		String contrasenya = json.getString("contrasenya");
 		VOUsuario user = new VOUsuario(nom,email,contrasenya);
 		user.setEdad(json.getInt("edat"));
-        db.createUser(user);
+        //db.createUser(user);
         
-        return Response.ok("done").build();
+        return Response.ok(db.createUser(user)).build();
 	}
 	
 	
