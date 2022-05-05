@@ -75,12 +75,17 @@ public class ServiceLoginJR {
 	
 	@GET
 	@Path("/getUsuari/{email}")
-	public Response getUsuari(@PathParam("email") String email) {
+	public JSONObject getUsuari(@PathParam("email") String email) throws JSONException {
+		JSONObject output = new JSONObject(); 
 		Database db = Database.getInstance();
 		VOUsuario user = new VOUsuario(); 
 		user.setEmail(email); 
 		user = db.getUsuari(user); 
-		return Response.ok(user).build(); 
+		output.put("email", user.getEmail()); 
+		output.put("nom", user.getNom()); 
+		output.put("edat", user.getEdad()); 
+		
+		return output; 
     }
 	
 	@GET
