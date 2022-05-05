@@ -43,10 +43,10 @@ public class ServiceLoginJR {
 	}
 	
 	@POST
-	@Path("/deleteUser")
+	@Path("/deleteUser/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject deleteUser(String email) throws JSONException {
+	public JSONObject deleteUser(@PathParam("email") String email) throws JSONException {
 		
 		JSONObject output = new JSONObject();
 		
