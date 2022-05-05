@@ -27,7 +27,9 @@ public class ServiceLoginJR {
 	@Path("/createUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response createUser(JSONObject json) throws JSONException {
+	public JSONObject createUser(JSONObject json) throws JSONException {
+		
+		JSONObject output = new JSONObject(); 
 		
 		Database db = Database.getInstance();
 		String nom = json.getString("nom");
@@ -35,11 +37,19 @@ public class ServiceLoginJR {
 		String contrasenya = json.getString("contrasenya");
 		VOUsuario user = new VOUsuario(nom,email,contrasenya);
 		user.setEdad(json.getInt("edat"));
-        //db.createUser(user);
+		output.put("resposta",db.createUser(user))
         
-        return Response.ok(db.createUser(user)).build();
+        return output; 
 	}
 	
+	@POST
+	@Path("/deleteUser")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response setGustosPersonals(JSONObject json) throws JSONException {
+		return Response.ok("proba").build(); 
+		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
+	}
 	
 	@POST
 	@Path("/setGustosPersonals")
