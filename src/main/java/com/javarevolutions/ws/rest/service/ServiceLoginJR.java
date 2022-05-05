@@ -79,7 +79,7 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		VOUsuario user = new VOUsuario(); 
 		user.setEmail(email); 
-		db.getUsuari(user); 
+		user = db.getUsuari(user); 
 		return Response.ok(user).build(); 
     }
 	
