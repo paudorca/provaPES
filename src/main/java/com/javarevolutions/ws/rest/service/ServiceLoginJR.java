@@ -46,12 +46,12 @@ public class ServiceLoginJR {
 	@Path("/deleteUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject deleteUser(JSONObject json) throws JSONException {
+	public JSONObject deleteUser(String email) throws JSONException {
 		
 		JSONObject output = new JSONObject();
 		
 		Database db = Database.getInstance();
-		output.put("resposta",db.deleteUsuari(json.getString("email")));
+		output.put("resposta",db.deleteUsuari(email));
 		
 		return output; 
 		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
