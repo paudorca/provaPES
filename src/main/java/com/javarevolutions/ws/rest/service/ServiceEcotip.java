@@ -1,5 +1,7 @@
 package com.javarevolutions.ws.rest.service; 
 
+import java.util.ArrayList;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -38,18 +40,21 @@ public class ServiceEcotip {
     public JSONObject getAllEcotips() throws JSONException {
         Database db = Database.getInstance();
         JSONObject json = new JSONObject(); 
-        json = db.getAllEcotips(); 
+        ArrayList<Ecotip> ecotips = db.getAllEcotips(); 
+         //cal tractar el return
         return json;
     }
 	
 	@GET
     @Path("/getQuiz/{idQuiz}")
 	@Produces({MediaType.APPLICATION_JSON})
-    public Response getQuiz(@PathParam("idQuiz") int idQuiz) {
+    public JSONObject getQuiz(@PathParam("idQuiz") int idQuiz) {
         Database db = Database.getInstance();
+        JSONObject json = new JSONObject();
         Quiz q = new Quiz();
 		q.setId(idQuiz);
 		q.setPreguntes(db.getPreguntes(idQuiz));
-        return Response.ok("done").build();
+		//afegir el quiz al JSONObject
+        return json;
     }
 }

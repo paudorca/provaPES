@@ -13,10 +13,8 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.javarevolutions.ws.rest.database.Queries;
-import com.javarevolutions.ws.rest.vo.Like;
-import com.javarevolutions.ws.rest.vo.Match;
-import com.javarevolutions.ws.rest.vo.VOUsuario;
+import com.javarevolutions.ws.rest.database.Database;
+import com.javarevolutions.ws.rest.vo.Oferta;
 
 @Path("/oferta")
 public class ServiceOferta {
@@ -25,87 +23,22 @@ public class ServiceOferta {
 	@Path("/createOferta")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response setUsuario(VOUsuario vo) throws JSONException {
-		myObject = new JSONObject(); 
-		myObject.put("usuario", vo.getUsuario());
-        myObject.put("password", vo.getPassword());
-        Queries q = new Queries(); 
-		String result = q.createUser(vo);
-        return Response.ok(result).build();
+	public Response createOferta(JSONObject json) throws JSONException {
+		Database db = Database.getInstance();
+		Oferta o = new Oferta();
+		db.createOferta(o);
+        return Response.ok("done").build();
 	}
 	
-	@POST
-	@Path("/addMatch")
+	@GET
+	@Path("/getOferta/{id}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response addMatch(Match m) throws JSONException {
-		myObject = new JSONObject(); 
-		myObject.put("usuario1", m.getUsuari1());
-        myObject.put("usuario2", m.getUsuari2());
-		Queries q = new Queries(); 
-		String result = q.addMatch(m);
-        return Response.ok(result).build();
-	}
-	
-	@POST
-	@Path("/addLike")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response addLike(Like l) throws JSONException {
-		myObject = new JSONObject(); 
-		myObject.put("usuario1", l.getUsuari1());
-        myObject.put("usuario2", l.getUsuari2());
-		Queries q = new Queries(); 
-		String result = q.addLike(l);
-        return Response.ok(result).build();
-	}
-	
-	@POST
-	@Path("/preferencies")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public int setGustosPersonals() throws JSONException {
-		return 1;
-		/* Queries q = new Queries(); 
-		 * String insert = q.insertaGustosUsuari()
-		 */
-	}
-	
-	@GET
-	@Path("/getGustosUsuari/{idUsuari}")
-	public Response getGustosPersonals(@PathParam("idUsuari") String idUsuari) {
-		return null;
-        /*Queries q = new Queries(); 
-        JSONObject j =  q.getGustosPersonals(id); 
-        return j;  */
-    }
-	
-	@GET
-	@Path("/inicializa")
-	public String ini() {
-		return "inicializado con exito";
-	}
-	
-	@GET
-	@Path("/validaUsuario")
-	public String validaUsuario() {
-		myObject = new JSONObject(); 
-		return "Prueba";
-	}
-	
-	@GET
-    @Path("/getUsuari/{email}")
-	@Produces({MediaType.APPLICATION_JSON})
-    public Response getEcotip(@PathParam("email") String email) {
-        Queries q = new Queries();
-        VOUsuario u = new VOUsuario(email); 
-        q.getUsuari(u); 
-        return Response.ok(u).build();
-    }
-	
-	@GET
-	@Path("/todos")
-	public String damelos() throws JSONException {
-		return "hola";
+	public JSONObject getOferta(@PathParam("id") String id) throws JSONException {
+		JSONObject json = new JSONObject();
+		Database db = Database.getInstance();
+		Oferta o = db.getOferta(Integer.parseInt(id));
+		//afegir la oferta al JSONObject
+        return json;
 	}
 }

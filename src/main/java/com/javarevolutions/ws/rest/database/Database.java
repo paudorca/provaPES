@@ -86,7 +86,6 @@ public class Database {
 			ResultSet rs = query(query);
 			Ecotip ecotip = new Ecotip();
 			ecotip.setId(id);
-			ecotip.setTitol("Fail");
 			try {
 				rs.next();
 				ecotip.setTitol(rs.getString("titol"));
@@ -96,6 +95,29 @@ public class Database {
 				e.printStackTrace();
 				return ecotip;
 			}
+	}
+
+	public ArrayList<Ecotip> getAllEcotips() {
+
+		String query = "SELECT * FROM Ecotips;";
+		ResultSet rs = query(query);
+		
+		ArrayList<Ecotip> ecotips = new ArrayList<Ecotip>();
+		Ecotip aux = new Ecotip();
+		try {
+			while(rs.next()) {
+				
+				aux.setId(rs.getInt("id"));
+				aux.setTitol(rs.getString("titol"));
+				aux.setText(rs.getString("contingut"));
+				aux.setQuiz(rs.getInt("id_quiz"));
+				ecotips.add(aux);
+			}
+			return ecotips;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return ecotips;
+		}
 	}
 	
 	public void insertEcotip(Ecotip e) {
@@ -121,17 +143,26 @@ public class Database {
 	}
 	
 	//Oferta
-	public void getOferta(Oferta oferta) {
-		String query = "SELECT * FROM Ofertes WHERE id = " + oferta.getId();
+	public Oferta getOferta(int id) {
+		String query = "SELECT * FROM Ofertes WHERE id = " + id + ";";
 		
+		Oferta oferta = new Oferta();
 		ResultSet rs = query(query);
 		//Tractar resultset
 		try {
 			rs.next();
+
+			return oferta;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return oferta;
 		}
+	}
+	
+	public void createOferta(Oferta oferta) {
+		
+		
 	}
 
 	public int createUser(VOUsuario user, String contrasenya) {
@@ -150,11 +181,57 @@ public class Database {
 		return update(query);
 	}
 
+	
+	private ResultSet getResposta(int id_pregunta){
+		
+		String query = "SELECT * FROM Respostes WHERE id_pregunta = " + id_pregunta + ";";
+		return query(query);
+	}
+	
 	public ArrayList<Pregunta> getPreguntes(int idQuiz) {
 		
-		//A l'arraylist puc fer preguntes.add i get(x)
+		String query = "SELECT * FROM Preguntes WHERE id_quiz = " + idQuiz + ";";
+		ResultSet rs = query(query);
+
 		ArrayList<Pregunta> preguntes = new ArrayList<Pregunta>();
+		Pregunta aux = new Pregunta();
 		
-		return preguntes;
+		try {
+			while(rs.next()) {
+				
+				aux.setId(rs.getInt("id_pregunta"));
+				aux.setDescripcio(rs.getString("text_preg"));
+
+				ArrayList<String> aux_res = new ArrayList<String>();
+				ResultSet aux_rs = getResposta(rs.getInt("id_pregunta"));
+				int i = 0;
+				
+				while (aux_rs.next()) {
+					
+					if (aux_rs.getBoolean("correcte")) aux.setRespostaCorrecta(i);
+					aux_res.add(aux_rs.getString("text_res"));
+				}
+				
+				aux.setRespostes(aux_res);
+				preguntes.add(aux);
+			}
+			return preguntes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return preguntes;
+		}
+	}
+
+	public Boolean loginUser(String email, String contrasenya) {
+		String query = "SELECT * FROM Passwords WHERE email = '" + email + "';";
+		ResultSet rs = query(query);
+		try {
+			rs.next();
+			return contrasenya == rs.getString("pass");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
