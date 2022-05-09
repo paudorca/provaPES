@@ -33,6 +33,16 @@ public class ServiceEcotip {
     }
 	
 	@GET
+    @Path("/getAllEcotips/")
+	@Produces({MediaType.APPLICATION_JSON})
+    public JSONObject getAllEcotips() throws JSONException {
+        Database db = Database.getInstance();
+        JSONObject json = new JSONObject(); 
+        json = db.getAllEcotips(); 
+        return json;
+    }
+	
+	@GET
     @Path("/getQuiz/{idQuiz}")
 	@Produces({MediaType.APPLICATION_JSON})
     public Response getQuiz(@PathParam("idQuiz") int idQuiz) {
