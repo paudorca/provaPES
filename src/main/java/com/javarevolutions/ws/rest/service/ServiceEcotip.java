@@ -38,9 +38,9 @@ public class ServiceEcotip {
 	@GET
     @Path("/getAllEcotips/")
 	@Produces({MediaType.APPLICATION_JSON})
-    public JSONObject getAllEcotips() throws JSONException {
+    public JSONArray getAllEcotips() throws JSONException {
         Database db = Database.getInstance();
-        JSONObject json = new JSONObject();  
+        JSONArray json = new JSONArray();  
         ArrayList<Ecotip> ecotips = db.getAllEcotips(); 
         for (int i = 0; i < ecotips.size();++i) {
         	JSONObject individual = new JSONObject();
@@ -50,7 +50,7 @@ public class ServiceEcotip {
         	individual.put("titol",titol); 
         	individual.put("descripcio",text); 
         	individual.put("idQuiz",idQuiz); 
-        	json.put("ecotip "+ecotips.get(i).getId(), individual); 
+        	json.put(individual); 
         }
         return json;
     }
