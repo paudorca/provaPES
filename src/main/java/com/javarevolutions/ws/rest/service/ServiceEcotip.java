@@ -42,15 +42,14 @@ public class ServiceEcotip {
         Database db = Database.getInstance();
         JSONArray json = new JSONArray();  
         ArrayList<Ecotip> ecotips = db.getAllEcotips(); 
-        for (int i = 0; i < ecotips.size();++i) {
+    	
+        for (int i = 0; i < ecotips.size(); ++i) {
         	JSONObject individual = new JSONObject();
-        	String titol = ecotips.get(i).getTitol();
-        	String text = ecotips.get(i).getText();
-        	int idQuiz = ecotips.get(i).getQuiz();
-        	individual.put("titol",titol); 
-        	individual.put("descripcio",text); 
-        	individual.put("idQuiz",idQuiz); 
-        	json.put(individual); 
+        	individual.put("id", ecotips.get(i).getId());
+        	individual.put("titol", ecotips.get(i).getTitol()); 
+        	individual.put("descripcio",ecotips.get(i).getText()); 
+        	individual.put("idQuiz",ecotips.get(i).getQuiz()); 
+        	json.put(i, individual);
         }
         return json;
     }
