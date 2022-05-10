@@ -162,7 +162,6 @@ public class Database {
 	
 	public void createOferta(Oferta oferta) {
 		
-		
 	}
 
 	public int createUser(VOUsuario user, String contrasenya) {

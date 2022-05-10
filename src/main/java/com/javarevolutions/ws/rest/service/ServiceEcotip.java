@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -39,9 +40,18 @@ public class ServiceEcotip {
 	@Produces({MediaType.APPLICATION_JSON})
     public JSONObject getAllEcotips() throws JSONException {
         Database db = Database.getInstance();
-        JSONObject json = new JSONObject(); 
+        JSONObject json = new JSONObject();  
         ArrayList<Ecotip> ecotips = db.getAllEcotips(); 
-         //cal tractar el return
+        for (int i = 0; i < ecotips.size();++i) {
+        	JSONObject individual = new JSONObject();
+        	String titol = ecotips.get(i).getTitol();
+        	String text = ecotips.get(i).getText();
+        	int idQuiz = ecotips.get(i).getQuiz();
+        	individual.put("titol",titol); 
+        	individual.put("descripcio",text); 
+        	individual.put("idQuiz",idQuiz); 
+        	json.put("ecotip "+ecotips.get(i).getId(), individual); 
+        }
         return json;
     }
 	
