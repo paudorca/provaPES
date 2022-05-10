@@ -221,17 +221,19 @@ public class Database {
 		}
 	}
 
-	public int loginUser(String email, String contrasenya) {
+	public String loginUser(String email, String contrasenya) {
 		String query = "SELECT * FROM Passwords WHERE email = '" + email + "';";
 		ResultSet rs = query(query);
 		try {
 			rs.next();
+			/*
 			if (contrasenya == rs.getString("pass")) return 1;
-			else return 0;
+			else return 0;*/
+			return rs.getString("pass");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return -1;
+			return "error";
 		}
 	}
 }
