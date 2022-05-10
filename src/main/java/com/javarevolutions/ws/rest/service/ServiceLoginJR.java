@@ -52,7 +52,10 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		String email = json.getString("email");
 		String contrasenya = json.getString("contrasenya");
-		output.put("login",db.loginUser(email, contrasenya));
+		
+		if (db.loginUser(email, contrasenya) == 1) output.put("login",true);
+		else if (db.loginUser(email, contrasenya) == 0) output.put("login",false);
+		else output.put("login","error");
         
         return output; 
 	}
