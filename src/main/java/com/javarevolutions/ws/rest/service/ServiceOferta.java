@@ -31,13 +31,13 @@ public class ServiceOferta {
 	}
 	
 	@GET
-	@Path("/getOferta/{id}")
+	@Path("/getOferta/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject getOferta(@PathParam("id") String id) throws JSONException {
+	public JSONObject getOferta(@PathParam("email") String email) throws JSONException {
 		JSONObject json = new JSONObject();
 		Database db = Database.getInstance();
-		Oferta o = db.getOferta(Integer.parseInt(id));
+		Oferta o = db.getOferta(email);
 		//afegir la oferta al JSONObject
         return json;
 	}

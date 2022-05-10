@@ -143,8 +143,8 @@ public class Database {
 	}
 	
 	//Oferta
-	public Oferta getOferta(int id) {
-		String query = "SELECT * FROM Ofertes WHERE id = " + id + ";";
+	public Oferta getOferta(String email) {
+		String query = "SELECT * FROM Ofertes WHERE id = '" + email + "';";
 		
 		Oferta oferta = new Oferta();
 		ResultSet rs = query(query);
