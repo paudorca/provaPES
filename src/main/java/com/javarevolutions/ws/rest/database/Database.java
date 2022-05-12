@@ -104,7 +104,9 @@ public class Database {
 		
 		ArrayList<Ecotip> ecotips = new ArrayList<Ecotip>();
 		Ecotip aux = new Ecotip();
+		
 		try {
+			/*
 			while(rs.next()) {
 				
 				aux.setId(rs.getInt("id"));
@@ -112,7 +114,29 @@ public class Database {
 				aux.setText(rs.getString("contingut"));
 				aux.setQuiz(rs.getInt("id_quiz"));
 				ecotips.add(aux);
-			}
+			}*/
+			
+			rs.next();
+			aux.setId(rs.getInt("id"));
+			aux.setTitol(rs.getString("titol"));
+			aux.setText(rs.getString("contingut"));
+			aux.setQuiz(rs.getInt("id_quiz"));
+			ecotips.add(0, aux);
+			
+			rs.next();
+			aux.setId(rs.getInt("id"));
+			aux.setTitol(rs.getString("titol"));
+			aux.setText(rs.getString("contingut"));
+			aux.setQuiz(rs.getInt("id_quiz"));
+			ecotips.add(1, aux);
+			
+			rs.next();
+			aux.setId(rs.getInt("id"));
+			aux.setTitol(rs.getString("titol"));
+			aux.setText(rs.getString("contingut"));
+			aux.setQuiz(rs.getInt("id_quiz"));
+			ecotips.add(2, aux);
+			
 			return ecotips;
 		} catch (SQLException e) {
 			e.printStackTrace();
