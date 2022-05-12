@@ -42,11 +42,7 @@ public class ServiceEcotip {
         Database db = Database.getInstance();
         JSONArray json = new JSONArray();  
         ArrayList<Ecotip> ecotips = db.getAllEcotips(); 
-        JSONObject individual = new JSONObject();
-    	String titol; 
-    	String text; 
-    	int idQuiz; 
-    	int id; 
+        //JSONObject individual = new JSONObject(); 
     	
         for (int i = 0; i < ecotips.size(); ++i) {
         	JSONObject individual = new JSONObject();
