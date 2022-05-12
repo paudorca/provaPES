@@ -113,7 +113,6 @@ public class Database {
 				aux.setId(rs.getInt("id"));
 				aux.setTitol(rs.getString("titol"));
 				aux.setText(rs.getString("contingut"));
-				aux.setQuiz(rs.getInt("id_quiz"));
 				ecotips.add(aux);
 			}
 			
