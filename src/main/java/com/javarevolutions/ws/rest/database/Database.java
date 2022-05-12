@@ -197,20 +197,21 @@ public class Database {
 		ResultSet rs = query(query);
 
 		ArrayList<Pregunta> preguntes = new ArrayList<Pregunta>();
-		Pregunta aux = new Pregunta();
+		
 		
 		try {
 			while(rs.next()) {
 				
+				Pregunta aux = new Pregunta();
 				aux.setId(rs.getInt("id_pregunta"));
 				aux.setDescripcio(rs.getString("text_preg"));
 
-				ArrayList<String> aux_res = new ArrayList<String>();
+				ArrayList<String> 
+				aux_res = new ArrayList<String>();
 				ResultSet aux_rs = getResposta(rs.getInt("id_pregunta"));
 				int i = 0;
 				
 				while (aux_rs.next()) {
-					
 					if (aux_rs.getBoolean("correcte")) aux.setRespostaCorrecta(i);
 					aux_res.add(aux_rs.getString("text_res"));
 				}

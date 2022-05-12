@@ -15,6 +15,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.vo.Ecotip;
+import com.javarevolutions.ws.rest.vo.Pregunta;
 import com.javarevolutions.ws.rest.vo.Quiz;
 
 @Path("/ecotips")
@@ -63,9 +64,8 @@ public class ServiceEcotip {
     public JSONObject getQuiz(@PathParam("idQuiz") int idQuiz) {
         Database db = Database.getInstance();
         JSONObject json = new JSONObject();
-        Quiz q = new Quiz();
-		q.setId(idQuiz);
-		q.setPreguntes(db.getPreguntes(idQuiz));
+        ArrayList<Pregunta> preguntes= new ArrayList<Pregunta>();
+		preguntes = db.getPreguntes(idQuiz);
 		//afegir el quiz al JSONObject
         return json;
     }
