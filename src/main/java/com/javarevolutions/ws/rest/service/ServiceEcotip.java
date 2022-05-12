@@ -47,16 +47,14 @@ public class ServiceEcotip {
     	String text; 
     	int idQuiz; 
     	int id; 
-        for (int i = 0; i < ecotips.size();++i) { 
-        	titol = ecotips.get(i).getTitol();
-        	text = ecotips.get(i).getText();
-        	idQuiz = ecotips.get(i).getQuiz();
-        	id = ecotips.get(i).getId();
-        	individual.put("id",id); 
-        	individual.put("titol",titol); 
-        	individual.put("descripcio",text); 
-        	individual.put("idQuiz",idQuiz); 
-        	json.put(individual); 
+    	
+        for (int i = 0; i < ecotips.size(); ++i) {
+        	JSONObject individual = new JSONObject();
+        	individual.put("id", ecotips.get(i).getId());
+        	individual.put("titol", ecotips.get(i).getTitol()); 
+        	individual.put("descripcio",ecotips.get(i).getText()); 
+        	individual.put("idQuiz",ecotips.get(i).getQuiz()); 
+        	json.put(i, individual);
         }
         return json;
     }
