@@ -59,12 +59,24 @@ public class ServiceEcotip {
 	@GET
     @Path("/getQuiz/{idQuiz}")
 	@Produces({MediaType.APPLICATION_JSON})
-    public JSONObject getQuiz(@PathParam("idQuiz") int idQuiz) {
+    public JSONObject getQuiz(@PathParam("idQuiz") int idQuiz) throws JSONException {
         Database db = Database.getInstance();
         JSONObject json = new JSONObject();
         ArrayList<Pregunta> preguntes= new ArrayList<Pregunta>();
 		preguntes = db.getPreguntes(idQuiz);
-		//afegir el quiz al JSONObject
+		for (int i = 0; i < preguntes.size(); ++i) {
+        	JSONObject individual = new JSONObject();
+        	Pregunta p = preguntes.get(i);
+        	individual.put("id",p.getId());
+        	individual.put("descripcio",p.getDescripcio());
+        	ArrayList<String> respostes = p.getRespostes(); 
+        	JSONArray jsonRespostes = new JSONArray(); 
+        	for (int j = 0; j < respostes.size();++j) {
+        		jsonRespostes.put(respostes.get(j)); 
+        	}
+        	individual.put("respostes",jsonRespostes); 
+        	individual.put("respostaCorrecta",p.getRespostaCorrecta()); 
+        }
         return json;
     }
 }
