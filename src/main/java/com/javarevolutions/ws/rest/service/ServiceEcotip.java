@@ -41,7 +41,8 @@ public class ServiceEcotip {
     public JSONArray getAllEcotips() throws JSONException {
         Database db = Database.getInstance();
         JSONArray json = new JSONArray();  
-        ArrayList<Ecotip> ecotips = db.getAllEcotips(); 
+        ArrayList<Ecotip> ecotips = new ArrayList<Ecotip>();
+        ecotips = db.getAllEcotips(); 
         //JSONObject individual = new JSONObject(); 
     	
         for (int i = 0; i < ecotips.size(); ++i) {
@@ -53,28 +54,6 @@ public class ServiceEcotip {
         	individual.put("idQuiz", e.getQuiz()); 
         	json.put(i, individual);
         }
-        /*
-        JSONObject individual = new JSONObject();
-    	individual.put("id", ecotips.get(0).getId());
-    	individual.put("titol", ecotips.get(0).getTitol()); 
-    	individual.put("descripcio",ecotips.get(0).getText()); 
-    	individual.put("idQuiz",ecotips.get(0).getQuiz()); 
-    	json.put(0, individual);
-    	
-    	JSONObject individual1 = new JSONObject();
-    	individual1.put("id", ecotips.get(1).getId());
-    	individual1.put("titol", ecotips.get(1).getTitol()); 
-    	individual1.put("descripcio",ecotips.get(1).getText()); 
-    	individual1.put("idQuiz",ecotips.get(1).getQuiz()); 
-    	json.put(1, individual1);
-    	
-    	JSONObject individual2 = new JSONObject();
-    	individual2.put("id", ecotips.get(2).getId());
-    	individual2.put("titol", ecotips.get(2).getTitol()); 
-    	individual2.put("descripcio",ecotips.get(2).getText()); 
-    	individual2.put("idQuiz",ecotips.get(2).getQuiz()); 
-    	json.put(2, individual2);
-    	*/
         return json;
     }
 	
