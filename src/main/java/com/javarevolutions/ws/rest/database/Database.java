@@ -151,9 +151,17 @@ public class Database {
 		
 		Oferta oferta = new Oferta();
 		ResultSet rs = query(query);
+		oferta.setEmail(email);
 		//Tractar resultset
 		try {
 			rs.next();
+			
+			oferta.setAdr(rs.getString("adr"));
+			oferta.setCodiPostal(rs.getInt("cod_pos"));
+			oferta.setPoblacio(rs.getString("pob"));
+			oferta.setNivellEnergetic(rs.getString("nivell_energetic"));
+			oferta.setNumeroOcupants(rs.getInt("num_ocupants"));
+			oferta.setPreu(rs.getInt("preu"));
 
 			return oferta;
 		} catch (SQLException e) {

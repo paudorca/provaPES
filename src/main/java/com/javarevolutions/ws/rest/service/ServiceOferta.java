@@ -26,11 +26,10 @@ public class ServiceOferta {
 	public Response createOferta(JSONObject json) throws JSONException {
 		Database db = Database.getInstance();
 		Oferta o = new Oferta();
-		o.setCarrer(json.getString("carrer")); 
+		o.setAdr(json.getString("adr")); 
 		o.setCodiPostal(json.getInt("codiPostal"));
 		o.setEmail(json.getString("email"));
-		o.setNivellEnergetic(json.getString("nivellEnergetic"));
-		o.setNumero(json.getInt("numero")); 
+		o.setNivellEnergetic(json.getString("nivellEnergetic")); 
 		o.setNumeroOcupants(json.getInt("numeroOcupants")); 
 		o.setPoblacio(json.getString("poblacio")); 
 		o.setPreu(json.getInt("preu")); 
@@ -47,10 +46,9 @@ public class ServiceOferta {
 		Database db = Database.getInstance();
 		Oferta o = db.getOferta(email);
 		json.put("email",o.getEmail()); 
-		json.put("carrer",o.getCarrer()); 
+		json.put("adr",o.getAdr()); 
 		json.put("codiPostal",o.getCodiPostal());
 		json.put("nivellEnergetic",o.getNivellEnergetic());
-		json.put("numero",o.getNumero());
 		json.put("numeroOcupants",o.getNumeroOcupants());
 		json.put("poblacio",o.getPoblacio());
 		json.put("preu",o.getPreu());

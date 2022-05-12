@@ -2,8 +2,7 @@ package com.javarevolutions.ws.rest.vo;
 
 public class Oferta {
 	private String email; 
-	private String carrer; 
-	private int numero; 
+	private String adr;
 	private int codiPostal; 
 	private String poblacio; 
 	private String nivellEnergetic; 
@@ -19,17 +18,11 @@ public class Oferta {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getCarrer() {
-		return carrer;
+	public String getAdr() {
+		return adr;
 	}
-	public void setCarrer(String carrer) {
-		this.carrer = carrer;
-	}
-	public int getNumero() {
-		return numero;
-	}
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setAdr(String adr) {
+		this.adr = adr;
 	}
 	public int getCodiPostal() {
 		return codiPostal;
