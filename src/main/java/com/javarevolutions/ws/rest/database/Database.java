@@ -173,10 +173,12 @@ public class Database {
 	
 	public void createOferta(Oferta oferta) {
 		
+		String query = "INSERT INTO Oferta (email, adr, cod_pos, pob, nivell_energetic, num_ocupants, descr, preu) VALUES ();";
+		update(query);
 	}
 
 	public int createUser(VOUsuario user, String contrasenya) {
-		String query = "INSERT INTO Usuari (nom, email, edat) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
+		String query = "INSERT INTO Usuari (nom, email, data_naix, descr) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
 		update(query);
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
 		return update(query);
