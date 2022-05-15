@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import com.javarevolutions.ws.rest.vo.Paquet;
 
@@ -14,7 +13,7 @@ public class ServiceXat {
 	public void run() throws IOException {
 		try {
 			@SuppressWarnings("resource")
-			ServerSocket servidor = new ServerSocket(9999); 
+			ServerSocket servidor = new ServerSocket(9090); 
 			@SuppressWarnings("unused")
 			String nom,ip,missatge; 
 			Paquet rebut; 
@@ -34,7 +33,7 @@ public class ServiceXat {
 			}
 		}
 		catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 }
