@@ -94,6 +94,33 @@ public class ServiceLoginJR {
 		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
 	}
 	
+	@POST
+	@Path("/postFoto")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response userPublicaImatge(JSONObject json) throws JSONException {
+		
+
+		Database db = Database.getInstance();
+		db.insertFoto(json.getString("email"), json.getString("URL"), "perfil");
+		
+		return Response.ok("done").build();
+	}
+	
+	@POST
+	@Path("/getFoto/{email}")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response userGetImatge(@PathParam("email") String email) throws JSONException {
+		
+
+		Database db = Database.getInstance();
+		ArrayList<String> fotos = new ArrayList<String>();
+		fotos = db.getFotos("email", "perfil");
+		
+		return Response.ok(fotos.get(0)).build();
+	} 
+	
 	@GET
 	@Path("/getGustosPersonals/{idUsuari}")
 	public JSONObject getGustosPersonals(@PathParam("idUsuari") String idUsuari) {

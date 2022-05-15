@@ -46,7 +46,7 @@ public class Database {
 			}
 		} 
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return null;
@@ -72,12 +72,16 @@ public class Database {
 			}
 		} 
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -2;
 		}
 	}
 	
+	public void insertEcotip(Ecotip e) {
+		String query = "INSERT INTO Ecotips VALUES (id = " + e.getId() + ", titol = '" + e.getTitol() + "', data_publ = null, contingut = '"+ e.getText() +"';";
+		update(query);
+	}
+
 	//Ecotip
 	public Ecotip getEcotip(int id) {
 			
@@ -123,11 +127,26 @@ public class Database {
 		}
 	}
 	
-	public void insertEcotip(Ecotip e) {
-		String query = "INSERT INTO Ecotips VALUES (id = " + e.getId() + ", titol = '" + e.getTitol() + "', data_publ = null, contingut = '"+ e.getText() +"';";
+	public int createUser(VOUsuario user, String contrasenya) {
+		String query = "INSERT INTO Usuari (nom, email, data_naix, descr) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
 		update(query);
+		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
+		return update(query);
 	}
-	
+
+	public Boolean loginUser(String email, String contrasenya) {
+		String query = "SELECT * FROM Passwords WHERE email = '" + email + "';";
+		ResultSet rs = query(query);
+		try {
+			rs.next();
+			if (contrasenya.equals(rs.getString("pass"))) return true;
+			else return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	//Usuari
 	public VOUsuario getUsuari(String email) {
 		String query = "SELECT * FROM Usuari WHERE email = '" + email + "';";
@@ -145,6 +164,21 @@ public class Database {
 		}
 	}
 	
+	public int deleteUsuari(String email) {
+		
+		
+		String query = "DELETE FROM Passwords WHERE email = '" + email + "';";
+		update(query);
+		query = "DELETE FROM Usuari WHERE email = '" + email + "';";
+		return update(query);
+	}
+
+	public void createOferta(Oferta oferta) {
+		
+		String query = "INSERT INTO Oferta (email, adr, cod_pos, pob, nivell_energetic, num_ocupants, descr, preu) VALUES ();";
+		update(query);
+	}
+
 	//Oferta
 	public Oferta getOferta(String email) {
 		String query = "SELECT * FROM Ofertes WHERE id = '" + email + "';";
@@ -152,7 +186,7 @@ public class Database {
 		Oferta oferta = new Oferta();
 		ResultSet rs = query(query);
 		oferta.setEmail(email);
-		//Tractar resultset
+		
 		try {
 			rs.next();
 			
@@ -165,34 +199,16 @@ public class Database {
 
 			return oferta;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return oferta;
 		}
 	}
 	
-	public void createOferta(Oferta oferta) {
+	public void deleteOferta(String email) {
 		
-		String query = "INSERT INTO Oferta (email, adr, cod_pos, pob, nivell_energetic, num_ocupants, descr, preu) VALUES ();";
+		String query = "DELETE FROM Ofertes WHERE email = '" + email + "';";
 		update(query);
 	}
-
-	public int createUser(VOUsuario user, String contrasenya) {
-		String query = "INSERT INTO Usuari (nom, email, data_naix, descr) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
-		update(query);
-		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
-		return update(query);
-	}
-	
-	public int deleteUsuari(String email) {
-		
-		
-		String query = "DELETE FROM Passwords WHERE email = '" + email + "';";
-		update(query);
-		query = "DELETE FROM Usuari WHERE email = '" + email + "';";
-		return update(query);
-	}
-
 	
 	private ResultSet getResposta(int id_pregunta){
 		
@@ -234,18 +250,41 @@ public class Database {
 			return preguntes;
 		}
 	}
-
-	public Boolean loginUser(String email, String contrasenya) {
-		String query = "SELECT * FROM Passwords WHERE email = '" + email + "';";
+	
+	public void serveiInsertFoto(int id, String URL) {
+		
+		String query = "INSERT INTO ServeiFoto (id, foto) VALUES (" + id + ",'" + URL + "');";
+		update(query);
+	}
+	
+	public void insertFoto(String email, String URL, String tipus) {
+		
+		String query = "INSERT INTO Imatges (email, foto, tipus) VALUES ('" + email + "','" + URL + "','" + tipus + "');";
+		update(query);
+	}
+	
+	public ArrayList<String> getFotos(String email, String tipus) {
+		
+		String query = "SELECT * FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "');";
 		ResultSet rs = query(query);
+		
+		ArrayList<String> fotos = new ArrayList<String>();
+		
 		try {
-			rs.next();
-			if (contrasenya.equals(rs.getString("pass"))) return true;
-			else return false;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
+			while(rs.next()) {
+				fotos.add(rs.getString("Foto"));
+			}	
 		}
+		 catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return fotos;
+	}
+	
+	public void deleteFotos(String email, String tipus) {
+		
+		String query = "DELETE FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "');";
+		update(query);
 	}
 }
