@@ -1,6 +1,7 @@
 package com.javarevolutions.ws.rest.service;
 
 import java.io.IOException;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -24,6 +25,7 @@ public class ServiceXat {
 				nom = rebut.getNom(); 
 				ip = rebut.getIp(); 
 				missatge = rebut.getMissatge(); 
+				System.out.println(missatge); //prova per veure si el servidor rep el missatge
 				Socket servidor_client = new Socket(ip,9090); 
 				ObjectOutputStream dades_output = new ObjectOutputStream(servidor_client.getOutputStream()); 
 				dades_output.writeObject(rebut);
