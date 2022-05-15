@@ -1,10 +1,8 @@
 package com.javarevolutions.ws.rest.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -12,44 +10,31 @@ import java.net.UnknownHostException;
 import com.javarevolutions.ws.rest.vo.Paquet;
 
 public class ServiceXat {
-	ServerSocket ss; 
-	Socket s; 
-	BufferedReader br; 
-	PrintWriter pw;
-	
-	void enviaText(String nom,String IP,String missatge) throws UnknownHostException, IOException {
-		Socket mySocket = new Socket("127.0.0.1",9999); 
-		Paquet enviament = new Paquet(nom,IP,missatge); 
-		ObjectOutputStream envioDades = new ObjectOutputStream(mySocket.getOutputStream());
-		envioDades.writeObject(enviament);
-		
-	}
 	
 	public void run() throws IOException {
-		Socket rebutReceptor = new Socket("127.0.0.1",999); 
-		String nom,ip,missatge; 
-		Paquet paquetRebut; 
-		
-		while (true) {
-			ObjectInputStream input = new ObjectInputStream(rebutReceptor.getInputStream()); 
-			try {
-				paquetRebut = (Paquet)input.readObject();
-				ip = paquetRebut.getIp(); 
-				nom = paquetRebut.getNom(); 
-				missatge = paquetRebut.getMissatge(); 
-				Socket envioDestinatari = new Socket("127.0.0.1",999); 
-				ObjectOutputStream output = new ObjectOutputStream(envioDestinatari.getOutputStream()); 
-				output.writeObject(paquetRebut); 
-				envioDestinatari.close();
-				rebutReceptor.close(); 
-				
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+		try {
+			@SuppressWarnings("resource")
+			ServerSocket servidor = new ServerSocket(9999); 
+			@SuppressWarnings("unused")
+			String nom,ip,missatge; 
+			Paquet rebut; 
+			while (true) {
+				Socket client_servidor = servidor.accept(); 
+				ObjectInputStream dades_input = new ObjectInputStream(client_servidor.getInputStream()); 
+				rebut = (Paquet)dades_input.readObject();
+				nom = rebut.getNom(); 
+				ip = rebut.getIp(); 
+				missatge = rebut.getMissatge(); 
+				Socket servidor_client = new Socket(ip,9090); 
+				ObjectOutputStream dades_output = new ObjectOutputStream(servidor_client.getOutputStream()); 
+				dades_output.writeObject(rebut);
+				dades_output.close();
+				servidor_client.close();
+				client_servidor.close();
+			}
+		}
+		catch(Exception e) {
+			
 		}
 	}
 }
