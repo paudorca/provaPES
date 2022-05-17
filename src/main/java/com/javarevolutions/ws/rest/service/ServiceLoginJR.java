@@ -111,14 +111,17 @@ public class ServiceLoginJR {
 	@Path("/getFoto/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response userGetImatge(@PathParam("email") String email) throws JSONException {
+	public JSONObject userGetImatge(@PathParam("email") String email) throws JSONException {
 		
 
 		Database db = Database.getInstance();
+		JSONObject ret = new JSONObject();
 		ArrayList<String> fotos = new ArrayList<String>();
 		fotos = db.getFotos("email", "perfil");
 		
-		return Response.ok(fotos.get(0)).build();
+		ret.put("result", fotos.get(0));
+		
+		return ret;
 	} 
 	
 	@GET

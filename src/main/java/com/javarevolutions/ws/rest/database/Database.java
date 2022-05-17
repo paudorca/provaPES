@@ -21,9 +21,7 @@ public class Database {
 
 	public static Database getInstance() {
 
-		if(dbObject == null) {
-			dbObject = new Database();
-		}
+		if(dbObject == null) dbObject = new Database();
 		return dbObject;
 	}	
 	
@@ -77,9 +75,9 @@ public class Database {
 		}
 	}
 	
-	public void insertEcotip(Ecotip e) {
+	public int insertEcotip(Ecotip e) {
 		String query = "INSERT INTO Ecotips VALUES (id = " + e.getId() + ", titol = '" + e.getTitol() + "', data_publ = null, contingut = '"+ e.getText() +"';";
-		update(query);
+		return update(query);
 	}
 
 	//Ecotip
@@ -173,10 +171,10 @@ public class Database {
 		return update(query);
 	}
 
-	public void createOferta(Oferta oferta) {
+	public int createOferta(Oferta oferta) {
 		
 		String query = "INSERT INTO Oferta (email, adr, cod_pos, pob, nivell_energetic, num_ocupants, descr, preu) VALUES ();";
-		update(query);
+		return update(query);
 	}
 
 	//Oferta
@@ -204,10 +202,10 @@ public class Database {
 		}
 	}
 	
-	public void deleteOferta(String email) {
+	public int deleteOferta(String email) {
 		
 		String query = "DELETE FROM Ofertes WHERE email = '" + email + "';";
-		update(query);
+		return update(query);
 	}
 	
 	private ResultSet getResposta(int id_pregunta){
@@ -251,16 +249,16 @@ public class Database {
 		}
 	}
 	
-	public void serveiInsertFoto(int id, String URL) {
+	public int serveiInsertFoto(int id, String URL) {
 		
 		String query = "INSERT INTO ServeiFoto (id, foto) VALUES (" + id + ",'" + URL + "');";
-		update(query);
+		return update(query);
 	}
 	
-	public void insertFoto(String email, String URL, String tipus) {
+	public int insertFoto(String email, String URL, String tipus) {
 		
 		String query = "INSERT INTO Imatges (email, foto, tipus) VALUES ('" + email + "','" + URL + "','" + tipus + "');";
-		update(query);
+		return update(query);
 	}
 	
 	public ArrayList<String> getFotos(String email, String tipus) {
@@ -282,9 +280,9 @@ public class Database {
 		return fotos;
 	}
 	
-	public void deleteFotos(String email, String tipus) {
+	public int deleteFotos(String email, String tipus) {
 		
 		String query = "DELETE FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "');";
-		update(query);
+		return update(query);
 	}
 }
