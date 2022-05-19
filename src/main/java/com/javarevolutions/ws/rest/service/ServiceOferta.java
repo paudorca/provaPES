@@ -109,7 +109,7 @@ public class ServiceOferta {
 		JSONArray ret = new JSONArray();
 		Database db = Database.getInstance();
 		ArrayList<String> fotos = new ArrayList<String>();
-		fotos = db.getFotos("email", "perfil");
+		fotos = db.getFotos("email", "oferta");
 		
 		for (int i = 0; i < fotos.size(); ++i) {
 			ret.put(i, fotos.get(i));

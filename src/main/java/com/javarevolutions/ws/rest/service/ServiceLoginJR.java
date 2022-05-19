@@ -37,7 +37,7 @@ public class ServiceLoginJR {
 		String data = "" + json.getString("any") + "-" + json.getString("mes") + "-" + json.getString("dia");
 		//String data = "1999-07-31";
 		VOUsuario user = new VOUsuario(nom,email);
-		output.put("resposta",db.createUser(user, data, contrasenya));
+		output.put("resposta",db.createUser(user, data, contrasenya, json.getString("descripcio")));
         output.put("data", data);
         return output; 
 	}
@@ -109,7 +109,7 @@ public class ServiceLoginJR {
 		return Response.ok("done").build();
 	}
 	
-	@POST
+	@GET
 	@Path("/getFoto/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})

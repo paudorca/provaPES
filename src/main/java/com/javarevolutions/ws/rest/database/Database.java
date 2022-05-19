@@ -125,10 +125,9 @@ public class Database {
 		}
 	}
 	
-	public int createUser(VOUsuario user, String data, String contrasenya) {
+	public int createUser(VOUsuario user, String data, String contrasenya, String descripcio) {
 		
-		//String query = "INSERT INTO Usuari (email, nom, data_naix, descr) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '1999-7-31', NULL);";
-		String query = "INSERT INTO Usuari (email, nom, data_naix, descr) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '" + data + "', NULL)";
+		String query = "INSERT INTO Usuari (email, nom, data_naix, descr) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '" + data + "', '" + descripcio + "')";
 		int x = update(query);
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
 		update(query);
@@ -276,7 +275,7 @@ public class Database {
 		
 		try {
 			while(rs.next()) {
-				fotos.add(rs.getString("Foto"));
+				fotos.add(rs.getString("url"));
 			}	
 		}
 		 catch (SQLException e) {
@@ -290,5 +289,24 @@ public class Database {
 		
 		String query = "DELETE FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "');";
 		return update(query);
+	}
+
+	public ArrayList<String> getAllFotos() {
+		String query = "SELECT * FROM ServeiFoto;";
+		ResultSet rs = query(query);
+		
+		ArrayList<String> fotos = new ArrayList<String>();
+		
+		try {
+			while(rs.next()) {
+				fotos.add(rs.getString("nom"));
+				fotos.add(rs.getString("foto"));
+			}	
+		}
+		 catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return fotos;
 	}
 }
