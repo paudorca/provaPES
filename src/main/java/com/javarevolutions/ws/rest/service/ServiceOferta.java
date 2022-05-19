@@ -30,12 +30,15 @@ public class ServiceOferta {
 		
 		Database db = Database.getInstance();
 		Oferta o = new Oferta();
-		o.setAdr(json.getString("adr")); 
-		o.setCodiPostal(json.getInt("codiPostal"));
+		o.setAdr(json.getString("adr"));
+		o.setDescripcio(json.getString("descripcio"));
 		o.setEmail(json.getString("email"));
-		o.setNivellEnergetic(json.getString("nivellEnergetic")); 
-		o.setNumeroOcupants(json.getInt("numeroOcupants")); 
-		o.setPoblacio(json.getString("poblacio")); 
+		o.setNivellEnergetic(json.getString("nivellEnergetic"));
+		o.setHabitacions(json.getString("habitacions"));
+		o.setSuperficie(json.getInt("superficie"));
+		o.setNumCas(json.getString("numCas"));
+		o.setNumeroOcupants(json.getInt("numeroOcupants"));
+		o.setPoblacio(json.getString("poblacio"));
 		o.setPreu(json.getInt("preu")); 
 
 		ret.put("result", db.createOferta(o));
@@ -51,14 +54,19 @@ public class ServiceOferta {
 		JSONObject json = new JSONObject();
 		Database db = Database.getInstance();
 		Oferta o = db.getOferta(email);
+		
 		json.put("email",o.getEmail()); 
-		json.put("adr",o.getAdr()); 
-		json.put("codiPostal",o.getCodiPostal());
+		json.put("adr",o.getAdr());
 		json.put("nivellEnergetic",o.getNivellEnergetic());
 		json.put("numeroOcupants",o.getNumeroOcupants());
 		json.put("poblacio",o.getPoblacio());
 		json.put("preu",o.getPreu());
-        return json;
+        json.put("habitacions", o.getHabitacions());
+        json.put("descripcio", o.getDescripcio());
+		json.put("numCas", o.getNumCas());
+		json.put("superficie", o.getSuperficie());
+		
+		return json;
 	}
 	
 	@GET
@@ -77,16 +85,16 @@ public class ServiceOferta {
 	@Path("/postFotos")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject ofertaPublicaImatges(JSONObject json) throws JSONException {
+	public JSONObject ofertaPublicaImatges(JSONArray json) throws JSONException {
 		
 		Database db = Database.getInstance();
-		String email = json.getString("email");
+		String email = json.getString(0);
 		
 		JSONObject ret = new JSONObject();
 		ret.put("result",1);
 		
-    	for (int i = 0; json.isNull("URL_" + i); ++i) {
-    		if (db.insertFoto(email, json.getString("URL_" + i), "oferta") < 0) ret.put("result", -1); 
+    	for (int i = 1; json.isNull(i); ++i) {
+    		if (db.insertFoto(email, json.getString(i), "oferta") < 0) ret.put("result", -1); 
     	}
 		
 		return ret;

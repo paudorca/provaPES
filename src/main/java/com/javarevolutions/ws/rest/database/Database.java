@@ -125,11 +125,14 @@ public class Database {
 		}
 	}
 	
-	public int createUser(VOUsuario user, String contrasenya) {
-		String query = "INSERT INTO Usuari (nom, email, data_naix, descr) VALUES ('" + user.getNom() + "', '" + user.getEmail() + "', "+ user.getEdad() +");";
-		update(query);
+	public int createUser(VOUsuario user, String data, String contrasenya) {
+		
+		//String query = "INSERT INTO Usuari (email, nom, data_naix, descr) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '1999-7-31', NULL);";
+		String query = "INSERT INTO Usuari (email, nom, data_naix, descr) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '" + data + "', NULL)";
+		int x = update(query);
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
-		return update(query);
+		update(query);
+		return x;
 	}
 
 	public Boolean loginUser(String email, String contrasenya) {
@@ -154,7 +157,9 @@ public class Database {
 		try {
 			rs.next();
 			user.setNom(rs.getString("nom"));
-			user.setEdad(rs.getInt("edat"));
+			//int naix = ;
+			user.setEdat(2022 - Integer.parseInt(rs.getDate("data_naix").toString().substring(0,4)));
+			user.setDescripcio("");
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -173,7 +178,8 @@ public class Database {
 
 	public int createOferta(Oferta oferta) {
 		
-		String query = "INSERT INTO Oferta (email, adr, cod_pos, pob, nivell_energetic, num_ocupants, descr, preu) VALUES ();";
+		String query = "INSERT INTO Oferta (email, adr, num_cas, cod_pos, pob, nivell_energetic, num_ocupants, habitacions, superficie, descr, preu)"
+				+ "VALUES ('" + oferta.getEmail() + "', '" + oferta.getAdr() + "', '" + oferta.getNumCas() + "', " + oferta.getCodiPostal() + ", '" + oferta.getPoblacio() + "', '" + oferta.getNivellEnergetic() + "', "  + oferta.getNumeroOcupants() + ", " + oferta.getHabitacions() + ", " + oferta.getSuperficie() +", '" + oferta.getDescripcio() + "', " + oferta.getPreu() +");";
 		return update(query);
 	}
 

@@ -3,9 +3,9 @@ package com.javarevolutions.ws.rest.vo;
 public class VOUsuario {
 	private String usuario; 
 	private String nom; 
-	private int edad;
-	private boolean userValido;
+	private int edat;
 	private String email;
+	private String descripcio;
 	
 	public VOUsuario() {
 		this.nom = null; 
@@ -24,26 +24,28 @@ public class VOUsuario {
 		return nom;
 		
 	}
-	public int getEdad() {
-		return edad; 
-	}
-	public boolean isUserValido() {
-		return userValido;
-	}
-	public void setUserValido(boolean userValido) {
-		this.userValido = userValido;
-	}
-	public String getEmail() {
-		// TODO Auto-generated method stub
-		return email;
-	}
 	public void setNom(String nom) {
 		this.nom = nom; 
 		
 	}
-	public void setEdad(int edad) {
-		this.edad = edad; 
+	public String getDescripcio() {
+		return descripcio;
 		
+	}
+	public void setDescripcio(String descripcio) {
+		this.descripcio = descripcio; 
+		
+	}
+	public int getEdat() {
+		return edat; 
+	}
+	public void setEdat(int edat) {
+		this.edat = edat; 
+		
+	}
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email; 

@@ -34,10 +34,11 @@ public class ServiceLoginJR {
 		String nom = json.getString("nom");
 		String email = json.getString("email");
 		String contrasenya = json.getString("contrasenya");
+		String data = "" + json.getString("any") + "-" + json.getString("mes") + "-" + json.getString("dia");
+		//String data = "1999-07-31";
 		VOUsuario user = new VOUsuario(nom,email);
-		user.setEdad(json.getInt("edat"));
-		output.put("resposta",db.createUser(user, contrasenya));
-        
+		output.put("resposta",db.createUser(user, data, contrasenya));
+        output.put("data", data);
         return output; 
 	}
 	
@@ -66,7 +67,8 @@ public class ServiceLoginJR {
 		user = db.getUsuari(email); 
 		output.put("email", user.getEmail()); 
 		output.put("nom", user.getNom()); 
-		output.put("edat", user.getEdad()); 
+		output.put("edat", user.getEdat()); 
+		output.put("descripcio", user.getDescripcio()); 
 		
 		return output; 
     }
