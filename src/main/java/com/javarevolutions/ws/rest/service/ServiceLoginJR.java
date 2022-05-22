@@ -38,7 +38,6 @@ public class ServiceLoginJR {
 		//String data = "1999-07-31";
 		VOUsuario user = new VOUsuario(nom,email);
 		output.put("resposta",db.createUser(user, data, contrasenya, json.getString("descripcio")));
-        output.put("data", data);
         return output; 
 	}
 	
@@ -121,7 +120,7 @@ public class ServiceLoginJR {
 		ArrayList<String> fotos = new ArrayList<String>();
 		fotos = db.getFotos("email", "perfil");
 		
-		ret.put("result", fotos.get(0));
+		ret.put("result", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
 		
 		return ret;
 	} 

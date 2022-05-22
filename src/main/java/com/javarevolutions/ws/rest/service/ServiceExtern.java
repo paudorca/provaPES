@@ -32,15 +32,15 @@ public class ServiceExtern {
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
 		ArrayList<String> fotos = new ArrayList<String>();
-		fotos = db.getFotos("email", "perfil");
+		fotos = db.getFotos("email", "extern");
 		
-		ret.put("result", fotos.get(0));
+		ret.put("result", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
 		
 		return ret;
 	}
 	
 	@GET
-	@Path("/getFotos/{email}")
+	@Path("/getFotos")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONArray ofertaGetImatge(@PathParam("email") String email) throws JSONException {
@@ -51,21 +51,21 @@ public class ServiceExtern {
 		fotos = db.getAllFotos();
 		JSONObject aux = new JSONObject();
 		for (int i = 0; i < fotos.size(); i+=2) {
-			aux.put(fotos.get(i), fotos.get(i+1));
+			aux.put(fotos.get(i), "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
 			ret.put(aux);
     	}
 		return ret;
 	}
-	
+			
 	@POST
 	@Path("/postFoto")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response extPublicaImatge(JSONObject json) throws JSONException {
 		
-
+		String save = json.getString("URL").substring(61, json.getString("URL").length() - 1);
 		Database db = Database.getInstance();
-		db.insertFoto(json.getString("email"), json.getString("URL"), "extern");
+		db.insertFoto(json.getString("email"), save, "extern");
 		
 		return Response.ok("done").build();
 	}
