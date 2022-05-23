@@ -94,7 +94,7 @@ public class ServiceOferta {
 		ret.put("result",1);
 		
     	for (int i = 1; json.isNull(i); ++i) {
-    		String save = json.getString(i).substring(61, json.getString(i).length() - 1);
+    		String save = json.getString(i).substring(61, json.getString(i).length());
     		if (db.insertFoto(email, save, "oferta") < 0) ret.put("result", -1); 
     	}
 		
@@ -110,7 +110,7 @@ public class ServiceOferta {
 		JSONArray ret = new JSONArray();
 		Database db = Database.getInstance();
 		ArrayList<String> fotos = new ArrayList<String>();
-		fotos = db.getFotos("email", "oferta");
+		fotos = db.getFotos(email, "oferta");
 		
 		for (int i = 0; i < fotos.size(); ++i) {
 			ret.put(i, "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i));

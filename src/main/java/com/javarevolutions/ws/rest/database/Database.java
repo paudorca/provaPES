@@ -262,13 +262,13 @@ public class Database {
 	
 	public int insertFoto(String email, String URL, String tipus) {
 		
-		String query = "INSERT INTO Imatges (email, foto, tipus) VALUES ('" + email + "','" + URL + "','" + tipus + "');";
+		String query = "INSERT INTO Imatges (email, url, tipus) VALUES ('" + email + "','" + URL + "','" + tipus + "');";
 		return update(query);
 	}
 	
 	public ArrayList<String> getFotos(String email, String tipus) {
 		
-		String query = "SELECT * FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "');";
+		String query = "SELECT * FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "';";
 		ResultSet rs = query(query);
 		
 		ArrayList<String> fotos = new ArrayList<String>();
@@ -276,7 +276,8 @@ public class Database {
 		try {
 			while(rs.next()) {
 				fotos.add(rs.getString("url"));
-			}	
+			}
+			if (fotos.isEmpty()) fotos.add("Fail");
 		}
 		 catch (SQLException e) {
 			e.printStackTrace();

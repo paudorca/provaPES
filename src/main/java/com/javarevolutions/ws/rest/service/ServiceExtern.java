@@ -9,7 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -32,9 +31,9 @@ public class ServiceExtern {
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
 		ArrayList<String> fotos = new ArrayList<String>();
-		fotos = db.getFotos("email", "extern");
+		fotos = db.getFotos(email, "extern");
 		
-		ret.put("result", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
+		ret.put("foto", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
 		
 		return ret;
 	}
@@ -49,9 +48,10 @@ public class ServiceExtern {
 		Database db = Database.getInstance();
 		ArrayList<String> fotos = new ArrayList<String>();
 		fotos = db.getAllFotos();
-		JSONObject aux = new JSONObject();
 		for (int i = 0; i < fotos.size(); i+=2) {
-			aux.put(fotos.get(i), "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
+			JSONObject aux = new JSONObject();
+			aux.put("nom", fotos.get(i));
+			aux.put("foto", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
 			ret.put(aux);
     	}
 		return ret;
@@ -61,12 +61,13 @@ public class ServiceExtern {
 	@Path("/postFoto")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response extPublicaImatge(JSONObject json) throws JSONException {
+	public JSONObject extPublicaImatge(JSONObject json) throws JSONException {
 		
-		String save = json.getString("URL").substring(61, json.getString("URL").length() - 1);
+		JSONObject ret = new JSONObject();
+		String save = json.getString("URL").substring(61, json.getString("URL").length());
 		Database db = Database.getInstance();
-		db.insertFoto(json.getString("email"), save, "extern");
+		ret.put("resposta", db.insertFoto(json.getString("email"), save, "extern"));
 		
-		return Response.ok("done").build();
+		return ret;
 	}
 }

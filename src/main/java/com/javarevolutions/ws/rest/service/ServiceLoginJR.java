@@ -103,7 +103,8 @@ public class ServiceLoginJR {
 		
 
 		Database db = Database.getInstance();
-		db.insertFoto(json.getString("email"), json.getString("URL"), "perfil");
+		String save = json.getString("URL").substring(61, json.getString("URL").length());
+		db.insertFoto(json.getString("email"), save, "perfil");
 		
 		return Response.ok("done").build();
 	}
@@ -118,7 +119,7 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
 		ArrayList<String> fotos = new ArrayList<String>();
-		fotos = db.getFotos("email", "perfil");
+		fotos = db.getFotos(email, "perfil");
 		
 		ret.put("result", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
 		
