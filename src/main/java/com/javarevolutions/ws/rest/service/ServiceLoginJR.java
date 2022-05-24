@@ -130,26 +130,4 @@ public class ServiceLoginJR {
 		
 		return ret;
 	} 
-	
-	@GET
-	@Path("/getGustosPersonals/{idUsuari}")
-	public JSONObject getGustosPersonals(@PathParam("idUsuari") String idUsuari) {
-		JSONObject json = new JSONObject();
-		//crida a una nova clase, que encara he de implementar 
-		return json; 
-    }
-	
-	@GET
-	@Path("/getPreferenciesUsuari/{idUsuari}")
-	public Response getPreferenciesUsuari(@PathParam("idUsuari") String idUsuari) {
-		return Response.ok("proba").build(); 
-		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
-    }
-	
-	//de prova per comprobar la conexio
-	@GET
-	@Path("/todos")
-	public Response damelos() throws JSONException {
-		return Response.ok("hola").build();
-	}
 }
