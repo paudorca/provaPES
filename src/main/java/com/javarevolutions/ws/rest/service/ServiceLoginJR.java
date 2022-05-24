@@ -87,12 +87,17 @@ public class ServiceLoginJR {
 	}
 	
 	@POST
-	@Path("/setGustosPersonals")
+	@Path("/setGustosPersonals/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response setGustosPersonals(JSONObject json) throws JSONException {
-		return Response.ok("proba").build(); 
-		//he de implementar l'algorisme de recomanacio, un cop estigui,podrem fer aquesta crida
+	public JSONObject setGustosPersonals(@PathParam("email") String email,JSONObject gustos) throws JSONException {
+		JSONObject output = new JSONObject(); 
+		Database db = Database.getInstance(); 
+		int result = db.setPreferencies(email,gustos.getInt("animals"),gustos.getInt("musica"),gustos.getInt("menjar"),
+				gustos.getInt("esport"),gustos.getInt("videojocs"),
+				gustos.getInt("literatura"),gustos.getInt("oci_nocturn"),gustos.getInt("horari_laboral")); 
+		output.put("resultat", result); 
+		return output;
 	}
 	
 	@POST

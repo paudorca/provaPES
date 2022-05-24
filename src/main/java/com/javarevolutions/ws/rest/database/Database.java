@@ -310,4 +310,13 @@ public class Database {
 		
 		return fotos;
 	}
+
+	public int setPreferencies(String email, int int1, int int2, int int3, 
+			int int4, int int5, int int6, int int7,
+			int int8) {
+		String query = "INSERT INTO Preferencies VALUES "
+				+ "('" + email + "," +int1 + "," + int2 + "," + int3 + "," + int3 + ","
+				  + int3 + "," + int3 + "," + int3 + "," + int3 + ");";
+		return update(query); 
+	}
 }
