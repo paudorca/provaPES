@@ -1,6 +1,7 @@
 package com.javarevolutions.ws.rest.kmeans;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,7 @@ public class Kmeans {
 
     private static final Random random = new Random();
 
-    public static Map<Centroid, List<Record>> fit(List<Record> records, 
-    		  int k, 
-    		  Distance distance, 
-    		  int maxIterations) {
+    public static Map<Centroid, List<Record>> fit(List<Record> records, int k, Distance distance, int maxIterations) {
 
     		    List<Centroid> centroids = randomCentroids(records, k);
     		    Map<Centroid, List<Record>> clusters = new HashMap<>();

@@ -314,9 +314,14 @@ public class Database {
 	public int setPreferencies(String email, int int1, int int2, int int3, 
 			int int4, int int5, int int6, int int7,
 			int int8) {
-		String query = "INSERT INTO Preferencies VALUES "
-				+ "('" + email + "," +int1 + "," + int2 + "," + int3 + "," + int3 + ","
-				  + int3 + "," + int3 + "," + int3 + "," + int3 + ");";
+		  String query = "INSERT INTO Preferencies VALUES "
+					+ "('" + email + "'," +int1 + "," + int2 + "," + int3 + "," + int3 + ","
+					  + int3 + "," + int3 + "," + int3 + "," + int3 + ");";
 		return update(query); 
+	}
+
+	public ArrayList<VOUsuario> getUsuarisSemblants() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

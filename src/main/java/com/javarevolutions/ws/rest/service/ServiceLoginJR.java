@@ -1,6 +1,9 @@
 package com.javarevolutions.ws.rest.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +17,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.database.Database;
+import com.javarevolutions.ws.rest.kmeans.Centroid;
+import com.javarevolutions.ws.rest.kmeans.EuclideanDistance;
+import com.javarevolutions.ws.rest.kmeans.Kmeans;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/users")
@@ -68,6 +74,19 @@ public class ServiceLoginJR {
 		output.put("nom", user.getNom()); 
 		output.put("edat", user.getEdat()); 
 		output.put("descripcio", user.getDescripcio()); 
+		
+		return output; 
+    }
+	
+	@GET
+	@Path("/getUsuarisSemblants/{email}")
+	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
+		Database db = Database.getInstance(); 
+		ArrayList<VOUsuario> usuarios = db.getUsuarisSemblants(); 
+		
+		List<Record> records; 
+		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,4, new EuclideanDistance(), 1000);
+		
 		
 		return output; 
     }
