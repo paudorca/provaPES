@@ -321,18 +321,24 @@ public class Database {
 	}
 
 	public ArrayList<VOUsuario> getUsuarisSemblants() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	public int addLike(String like, String liked) {
 		String query = "SELECT * FROM Likes where usuari1= '" + liked + "' and usuari2 = '" + like + "';"; 
 		ResultSet rs = query(query); 
-		if (rs != null) {
-			String query1 = "UPDATE Likes SET reciproc = 1 where usuari1 = '" + liked + "' and usuari2 = '" + like + "'"; 
-			return update(query1); 
+		try {
+			while(rs.next()) {
+				String query1 = "UPDATE Likes SET reciproc = 1 where usuari1 = '" + liked + "' and usuari2 = '" + like + "'"; 
+				update(query1); 
+				return 2; 
+			}
+			query = "INSERT INTO Likes VALUES ('" + like + "', '" + liked + "',0)"; 
+			return update(query); 
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		query = "INSERT INTO Likes VALUES ('" + like + "', '" + liked + "',0)"; 
-		return update(query); 
+		return 0;
 	}
 }
