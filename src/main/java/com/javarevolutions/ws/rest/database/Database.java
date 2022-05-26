@@ -324,4 +324,15 @@ public class Database {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public int addLike(String like, String liked) {
+		String query = "SELECT * FROM LIKES where usuari1= '" + liked + "' and usuari2 = '" + like + "';"; 
+		ResultSet rs = query(query); 
+		if (rs != null) {
+			String query1 = "UPDATE Likes SET reciproc = 1 where usuari1 = '" + liked + "' and usuari2 = '" + like + "'"; 
+			return update(query1); 
+		}
+		query = "INSERT INTO Likes VALUES ('" + like + "', '" + liked + "',0)"; 
+		return update(query); 
+	}
 }
