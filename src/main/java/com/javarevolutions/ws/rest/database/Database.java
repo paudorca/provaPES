@@ -328,7 +328,7 @@ public class Database {
 	public int addLike(String like, String liked) {
 		String query = "SELECT * FROM LIKES where usuari1= '" + liked + "' and usuari2 = '" + like + "';"; 
 		ResultSet rs = query(query); 
-		if (rs != null) {
+		if (rs == null) {
 			String query1 = "UPDATE Likes SET reciproc = 1 where usuari1 = '" + liked + "' and usuari2 = '" + like + "'"; 
 			return update(query1); 
 		}
