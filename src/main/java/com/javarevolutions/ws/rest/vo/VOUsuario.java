@@ -3,7 +3,7 @@ package com.javarevolutions.ws.rest.vo;
 public class VOUsuario {
 	private String usuario; 
 	private String nom; 
-	private int edat;
+	private String edat;
 	private String email;
 	private String descripcio;
 	
@@ -36,10 +36,10 @@ public class VOUsuario {
 		this.descripcio = descripcio; 
 		
 	}
-	public int getEdat() {
+	public String getEdat() {
 		return edat; 
 	}
-	public void setEdat(int edat) {
+	public void setEdat(String edat) {
 		this.edat = edat; 
 		
 	}

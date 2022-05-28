@@ -157,13 +157,19 @@ public class Database {
 			rs.next();
 			user.setNom(rs.getString("nom"));
 			//int naix = ;
-			user.setEdat(2022 - Integer.parseInt(rs.getDate("data_naix").toString().substring(0,4)));
+			user.setEdat(rs.getDate("data_naix").toString());
 			user.setDescripcio("");
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public int updatePassword(String email, String contrasenya) {
+		
+		String query = "UPDATE Usuari SET pass = '" + contrasenya + "' WHERE email = '" + email + "';";
+		return update(query);
 	}
 	
 	public int deleteUsuari(String email) {
@@ -301,7 +307,7 @@ public class Database {
 	
 	public int deleteFotos(String email, String tipus) {
 		
-		String query = "DELETE FROM Imatges WHERE email = '" + email + "' AND tipus ='" + tipus + "');";
+		String query;
 		if (tipus.equals("perfil")) query = "DELETE foto FROM Usuari WHERE email = '" + email + "';";
 		else if (tipus.equals("oferta")) query = "DELETE FROM ImatgesOferta WHERE email = '" + email + "';";
 		else if (tipus.equals("extern")) query = "DELETE FROM ImatgesServei WHERE id = '" + email + "';";
