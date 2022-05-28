@@ -27,27 +27,27 @@ public class ServiceOferta {
 	public JSONObject createOferta(JSONObject json) throws JSONException {
 		
 		JSONObject ret = new JSONObject();
-		
+
 		Database db = Database.getInstance();
 		Oferta o = new Oferta();
+		
 		o.setAdr(json.getString("adr"));
 		o.setDescripcio(json.getString("descripcio"));
 		o.setEmail(json.getString("email"));
 		o.setNivellEnergetic(json.getString("nivellEnergetic"));
-		o.setHabitacions(json.getString("habitacions"));
+		o.setHabitacions(json.getInt("habitacions"));
 		o.setSuperficie(json.getInt("superficie"));
 		o.setNumCas(json.getString("numCas"));
 		o.setNumeroOcupants(json.getInt("numeroOcupants"));
 		o.setPoblacio(json.getString("poblacio"));
 		o.setPreu(json.getInt("preu")); 
-
+		
 		ret.put("result", db.createOferta(o));
-        return ret;
+		return ret;
 	}
 
 	@GET
 	@Path("/getOferta/{email}")
-	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject getOferta(@PathParam("email") String email) throws JSONException {
 		
@@ -71,7 +71,6 @@ public class ServiceOferta {
 	
 	@GET
 	@Path("/deleteOferta/{email}")
-	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject deleteOferta(@PathParam("email") String email) throws JSONException {
 		
@@ -95,7 +94,7 @@ public class ServiceOferta {
 		
     	for (int i = 1; json.isNull(i); ++i) {
     		String save = json.getString(i).substring(61, json.getString(i).length());
-    		if (db.insertFoto(email, save, "oferta") < 0) ret.put("result", -1); 
+    		if (db.insertFoto(email, save, "oferta", i) < 0) ret.put("result", -1); 
     	}
 		
 		return ret;

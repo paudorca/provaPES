@@ -56,7 +56,21 @@ public class ServiceExtern {
     	}
 		return ret;
 	}
-			
+	
+	@POST
+	@Path("/postImatge")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject uploadImatgeServei(JSONObject json) throws JSONException {
+		
+		JSONObject ret = new JSONObject();
+		String save = json.getString("URL").substring(61, json.getString("URL").length());
+		Database db = Database.getInstance();
+		ret.put("resposta", db.uploadFoto(json.getString("email"), save));
+		
+		return ret;
+	}
+	
 	@POST
 	@Path("/postFoto")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -66,7 +80,7 @@ public class ServiceExtern {
 		JSONObject ret = new JSONObject();
 		String save = json.getString("URL").substring(61, json.getString("URL").length());
 		Database db = Database.getInstance();
-		ret.put("resposta", db.insertFoto(json.getString("email"), save, "extern"));
+		ret.put("resposta", db.insertFoto(json.getString("email"), save, "extern", 0));
 		
 		return ret;
 	}
