@@ -73,6 +73,22 @@ public class ServiceLoginJR {
     }
 	
 	@POST
+	@Path("/changePass")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject deleteUser(JSONObject json) throws JSONException {
+		
+		JSONObject output = new JSONObject();
+		
+		Database db = Database.getInstance();
+		
+		if(db.loginUser(json.getString("email"), json.getString("contrasenya_actual"))) output.put("resposta",db.updatePassword(json.getString("email"), json.getString("contrasenya_nova")));
+		else output.put("resposta", "Incorrect Password");
+		
+		return output;
+	}
+	
+	@POST
 	@Path("/deleteUser/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
@@ -104,7 +120,7 @@ public class ServiceLoginJR {
 
 		Database db = Database.getInstance();
 		String save = json.getString("URL").substring(61, json.getString("URL").length());
-		db.insertFoto(json.getString("email"), save, "perfil");
+		db.insertFoto(json.getString("email"), save, "perfil", 0);
 		
 		return Response.ok("done").build();
 	}
@@ -115,7 +131,6 @@ public class ServiceLoginJR {
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject userGetImatge(@PathParam("email") String email) throws JSONException {
 		
-
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
 		ArrayList<String> fotos = new ArrayList<String>();

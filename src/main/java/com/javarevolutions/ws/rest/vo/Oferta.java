@@ -3,9 +3,8 @@ package com.javarevolutions.ws.rest.vo;
 public class Oferta {
 	private String email; 
 	private String adr;
-	private int codiPostal; 
 	private String poblacio;
-	private String habitacions;
+	private int habitacions;
 	private String descripcio; 
 	private String nivellEnergetic;
 	private String numCas;
@@ -27,12 +26,6 @@ public class Oferta {
 	}
 	public void setAdr(String adr) {
 		this.adr = adr;
-	}
-	public int getCodiPostal() {
-		return codiPostal;
-	}
-	public void setCodiPostal(int string) {
-		this.codiPostal = string;
 	}
 	public String getPoblacio() {
 		return poblacio;
@@ -64,10 +57,10 @@ public class Oferta {
 	public void setDescripcio(String descripcio) {
 		this.descripcio = descripcio; 
 	} 
-	public String getHabitacions() {
+	public int getHabitacions() {
 		return habitacions;
 	}
-	public void setHabitacions(String habitacions) {
+	public void setHabitacions(int habitacions) {
 		this.habitacions = habitacions;
 	}
 	public int getSuperficie() {
