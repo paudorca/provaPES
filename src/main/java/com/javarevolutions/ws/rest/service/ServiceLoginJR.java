@@ -81,6 +81,8 @@ public class ServiceLoginJR {
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
+		
+		
 		Database db = Database.getInstance(); 
 		ArrayList<VOUsuario> usuarios = db.getUsuarisSemblants(); 
 		
