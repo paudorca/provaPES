@@ -156,9 +156,9 @@ public class Database {
 		try {
 			rs.next();
 			user.setNom(rs.getString("nom"));
-			//int naix = ;
 			user.setEdat(rs.getDate("data_naix").toString());
-			user.setDescripcio("");
+			user.setDescripcio(rs.getString("descr"));
+			user.setFoto(rs.getString("foto"));
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,6 +184,12 @@ public class Database {
 	public int createOferta(Oferta oferta) {
 		
 		String query = "INSERT INTO Ofertes (email, adr, num_cas, pob, nivell_energetic, num_ocupants, habitacions, superficie, descr, preu) VALUES ('" + oferta.getEmail() + "', '" + oferta.getAdr() + "', '" + oferta.getNumCas() + "', '" + oferta.getPoblacio() + "', '" + oferta.getNivellEnergetic() + "', "  + oferta.getNumeroOcupants() + ", " + oferta.getHabitacions() + ", " + oferta.getSuperficie() +", '" + oferta.getDescripcio() + "', " + oferta.getPreu() +");";
+		return update(query);
+	}
+
+	public int updateOferta(Oferta oferta) {
+		
+		String query = "UPDATE Usuari SET  adr = '" + oferta.getAdr() + "', num_cas = '" + oferta.getNumCas() + "', pob = '" + oferta.getPoblacio() + "', nivell_energetic = '" + oferta.getNivellEnergetic() + "', num_ocupants = " + oferta.getNumeroOcupants() + ", habitacions = " + oferta.getHabitacions() + ", superficie = " + oferta.getSuperficie() + ", descr = '" + oferta.getDescripcio() + "', preu = " + oferta.getPreu() + " WHERE email = '" + oferta.getEmail() + "';";
 		return update(query);
 	}
 
@@ -270,12 +276,22 @@ public class Database {
 		return update(query);
 	}
 	
-	public int insertFoto(String email, String URL, String tipus, int id) {
+	public int insertFoto(String email, String URL, String tipus, String id) {
 		
 		String query;
 		if (tipus.equals("perfil")) query = "UPDATE Usuari SET foto = '" + URL + "' WHERE email = '" + email + "';";
 		else if (tipus.equals("oferta")) query = "INSERT INTO ImatgesOferta (email, id, url) VALUES ('" + email + "', " + id + ", '" + URL + "');";
 		else if (tipus.equals("extern")) query = "INSERT INTO ImatgesServei (id, url) VALUES ('" + email + "','" + URL + "');";
+		else query = "Fail";
+		return update(query);
+	}
+	
+	public int updateFoto(String email, String URL, String tipus, String id) {
+		
+		String query;
+		if (tipus.equals("perfil")) query = "UPDATE Usuari SET foto = '" + URL + "' WHERE email = '" + email + "';";
+		else if (tipus.equals("oferta")) query = "UPDATE ImatgesOferta SET url = '" + URL + "' WHERE email = '" + email + "' AND id = " + id + ";";
+		else if (tipus.equals("extern")) query = "UPDATE ImatgesServei SET url = '" + URL + "' WHERE id = '" + email + "';";
 		else query = "Fail";
 		return update(query);
 	}
@@ -292,16 +308,20 @@ public class Database {
 		ArrayList<String> fotos = new ArrayList<String>();
 		
 		try {
-			while(rs.next()) {
-				fotos.add(rs.getString("url"));
+			if (tipus.equals("perfil") && rs.next()) fotos.add(rs.getString("foto"));
+			else if (tipus.equals("oferta")) {
+				while(rs.next()) {
+					fotos.add(rs.getString("id"));
+					fotos.add(rs.getString("url"));
+				}
 			}
-			if (fotos.isEmpty()) fotos.add("Fail");
+			else if (tipus.equals("extern") && rs.next()) fotos.add(rs.getString("url"));
 		}
 		 catch (SQLException e) {
 			e.printStackTrace();
-			fotos.add("Fail");
 		}
-		
+
+		if (fotos.isEmpty()) fotos.add("Fail");
 		return fotos;
 	}
 	

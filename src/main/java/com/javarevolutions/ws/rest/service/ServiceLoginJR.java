@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -24,9 +23,6 @@ import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/users")
 public class ServiceLoginJR {
-	
-	ArrayList<VOUsuario> lista; 
-	JSONObject myObject; 
 	
 	@POST
 	@Path("/createUser")
@@ -74,6 +70,7 @@ public class ServiceLoginJR {
 		output.put("nom", user.getNom()); 
 		output.put("edat", user.getEdat()); 
 		output.put("descripcio", user.getDescripcio()); 
+		output.put("foto", user.getFoto()); 
 		
 		return output; 
     }
@@ -154,14 +151,14 @@ public class ServiceLoginJR {
 	@Path("/postFoto")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response userPublicaImatge(JSONObject json) throws JSONException {
+	public JSONObject userPublicaImatge(JSONObject json) throws JSONException {
 		
-
+		JSONObject ret = new JSONObject();
 		Database db = Database.getInstance();
 		String save = json.getString("URL").substring(61, json.getString("URL").length());
-		db.insertFoto(json.getString("email"), save, "perfil", 0);
+		ret.put("resposta", db.insertFoto(json.getString("email"), save, "perfil", null));
 		
-		return Response.ok("done").build();
+		return ret;
 	}
 	
 	@GET

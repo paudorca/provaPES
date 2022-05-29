@@ -66,7 +66,7 @@ public class ServiceExtern {
 		JSONObject ret = new JSONObject();
 		String save = json.getString("URL").substring(61, json.getString("URL").length());
 		Database db = Database.getInstance();
-		ret.put("resposta", db.uploadFoto(json.getString("email"), save));
+		ret.put("resposta", db.uploadFoto(json.getString("id"), save));
 		
 		return ret;
 	}
@@ -80,7 +80,10 @@ public class ServiceExtern {
 		JSONObject ret = new JSONObject();
 		String save = json.getString("URL").substring(61, json.getString("URL").length());
 		Database db = Database.getInstance();
-		ret.put("resposta", db.insertFoto(json.getString("email"), save, "extern", 0));
+		
+		if(db.insertFoto(json.getString("email"), save, "extern", null) == 1) ret.put("resposta", 1);
+		else if(db.updateFoto(json.getString("email"), save, "extern", null) == 1) ret.put("resposta", 1);
+		else ret.put("resposta", -1);
 		
 		return ret;
 	}

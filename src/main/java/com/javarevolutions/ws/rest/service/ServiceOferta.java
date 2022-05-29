@@ -42,7 +42,9 @@ public class ServiceOferta {
 		o.setPoblacio(json.getString("poblacio"));
 		o.setPreu(json.getInt("preu")); 
 		
-		ret.put("result", db.createOferta(o));
+		if (db.createOferta(o) == 1) ret.put("result", 1);
+		else if (db.updateOferta(o) == 1) ret.put("result", 1);
+		else ret.put("result", -1);
 		return ret;
 	}
 
@@ -87,14 +89,21 @@ public class ServiceOferta {
 	public JSONObject ofertaPublicaImatges(JSONArray json) throws JSONException {
 		
 		Database db = Database.getInstance();
-		String email = json.getString(0);
 		
 		JSONObject ret = new JSONObject();
-		ret.put("result",1);
 		
-    	for (int i = 1; json.isNull(i); ++i) {
-    		String save = json.getString(i).substring(61, json.getString(i).length());
-    		if (db.insertFoto(email, save, "oferta", i) < 0) ret.put("result", -1); 
+		String email = json.getJSONObject(0).getString("email");
+		ret.put("test", json.isNull(0)); 
+		
+		int i = 0;
+		while (json.isNull(i)) {
+    		ret.put("Iteracio", i);
+    		JSONObject aux = json.getJSONObject(i);
+    		String save = aux.getString("url").substring(61, aux.getString("url").length());
+    		if (db.insertFoto(email, save, "oferta", aux.getString("id")) == 1) ret.put("resultat " + i, 1);
+    		else if (db.updateFoto(email, save, "oferta", aux.getString("id")) == 1) ret.put("resultat " + i, 1);
+    		else ret.put("resultat " + i, -1);
+    		++i;
     	}
 		
 		return ret;
@@ -111,8 +120,10 @@ public class ServiceOferta {
 		ArrayList<String> fotos = new ArrayList<String>();
 		fotos = db.getFotos(email, "oferta");
 		
-		for (int i = 0; i < fotos.size(); ++i) {
-			ret.put(i, "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i));
+		for (int i = 0; i < fotos.size(); i+=2) {
+			JSONObject aux = new JSONObject();
+			aux.put("id", fotos.get(i));
+			ret.put(i, "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
     	}
 		return ret;
 	} 

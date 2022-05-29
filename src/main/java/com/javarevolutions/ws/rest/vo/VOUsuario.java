@@ -1,11 +1,11 @@
 package com.javarevolutions.ws.rest.vo;
 
 public class VOUsuario {
-	private String usuario; 
 	private String nom; 
 	private String edat;
 	private String email;
 	private String descripcio;
+	private String foto;
 	
 	public VOUsuario() {
 		this.nom = null; 
@@ -15,10 +15,6 @@ public class VOUsuario {
 	public VOUsuario(String nom, String email) {
 		this.nom = nom; 
 		this.email = email; 
-	}
-	
-	public String getUsuario() {
-		return usuario;
 	}
 	public String getNom() {
 		return nom;
@@ -49,5 +45,12 @@ public class VOUsuario {
 	}
 	public void setEmail(String email) {
 		this.email = email; 
+	}
+	public String getFoto() {
+		// TODO Auto-generated method stub
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto; 
 	}
 }
