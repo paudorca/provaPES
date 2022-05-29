@@ -187,7 +187,7 @@ public class ServiceLoginJR {
 		ArrayList<String> fotos = new ArrayList<String>();
 		fotos = db.getFotos(email, "perfil");
 		
-		ret.put("result", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
+		ret.put("foto", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
 		
 		return ret;
 	} 

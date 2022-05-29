@@ -92,16 +92,13 @@ public class ServiceOferta {
 		
 		JSONObject ret = new JSONObject();
 		
-		
-		
 		String email = json.getJSONObject(0).getString("email");
-		ret.put("test", email); 
 		
 		int i = 0;
 		while (!json.isNull(i)) {
-    		String save = json.getJSONObject(i).getString("foto").substring(61, json.getJSONObject(i).getString("foto").length());
-    		if (db.insertFoto(email, save, "oferta", json.getJSONObject(i).getString("nom")) == 1) ret.put("resultat " + i, 1);
-    		else if (db.updateFoto(email, save, "oferta", json.getJSONObject(i).getString("nom")) == 1) ret.put("resultat " + i, 1);
+    		String save = json.getJSONObject(i).getString("url").substring(61, json.getJSONObject(i).getString("url").length());
+    		if (db.insertFoto(email, save, "oferta", json.getJSONObject(i).getString("id")) == 1) ret.put("resultat " + i, 1);
+    		else if (db.updateFoto(email, save, "oferta", json.getJSONObject(i).getString("id")) == 1) ret.put("resultat " + i, 1);
     		else ret.put("resultat " + i, -1);
     		++i;
     	}
@@ -123,7 +120,8 @@ public class ServiceOferta {
 		for (int i = 0; i < fotos.size(); i+=2) {
 			JSONObject aux = new JSONObject();
 			aux.put("id", fotos.get(i));
-			ret.put(i, "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
+			aux.put("foto", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
+			ret.put(i, aux);
     	}
 		return ret;
 	} 

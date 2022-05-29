@@ -42,7 +42,7 @@ public class ServiceExtern {
 	@Path("/getFotos")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONArray ofertaGetImatge(@PathParam("email") String email) throws JSONException {
+	public JSONArray ofertaGetImatge() throws JSONException {
 		
 		JSONArray ret = new JSONArray();
 		Database db = Database.getInstance();
@@ -50,9 +50,9 @@ public class ServiceExtern {
 		fotos = db.getAllFotos();
 		for (int i = 0; i < fotos.size(); i+=2) {
 			JSONObject aux = new JSONObject();
-			aux.put("nom", fotos.get(i));
-			aux.put("foto", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
-			ret.put(aux);
+			aux.put("id", fotos.get(i));
+			aux.put("url", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(i+1));
+			ret.put(i, aux);
     	}
 		return ret;
 	}
