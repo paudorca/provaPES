@@ -92,16 +92,16 @@ public class ServiceOferta {
 		
 		JSONObject ret = new JSONObject();
 		
+		
+		
 		String email = json.getJSONObject(0).getString("email");
-		ret.put("test", json.isNull(0)); 
+		ret.put("test", email); 
 		
 		int i = 0;
-		while (json.isNull(i)) {
-    		ret.put("Iteracio", i);
-    		JSONObject aux = json.getJSONObject(i);
-    		String save = aux.getString("url").substring(61, aux.getString("url").length());
-    		if (db.insertFoto(email, save, "oferta", aux.getString("id")) == 1) ret.put("resultat " + i, 1);
-    		else if (db.updateFoto(email, save, "oferta", aux.getString("id")) == 1) ret.put("resultat " + i, 1);
+		while (!json.isNull(i)) {
+    		String save = json.getJSONObject(i).getString("foto").substring(61, json.getJSONObject(i).getString("foto").length());
+    		if (db.insertFoto(email, save, "oferta", json.getJSONObject(i).getString("nom")) == 1) ret.put("resultat " + i, 1);
+    		else if (db.updateFoto(email, save, "oferta", json.getJSONObject(i).getString("nom")) == 1) ret.put("resultat " + i, 1);
     		else ret.put("resultat " + i, -1);
     		++i;
     	}

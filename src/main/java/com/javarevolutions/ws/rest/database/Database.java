@@ -127,7 +127,7 @@ public class Database {
 	
 	public int createUser(VOUsuario user, String data, String contrasenya, String descripcio) {
 		
-		String query = "INSERT INTO Usuari (email, nom, data_naix, descr) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '" + data + "', '" + descripcio + "')";
+		String query = "INSERT INTO Usuari (email, nom, data_naix, descr, puntuacio) VALUES ('" + user.getEmail() + "', '" + user.getNom() + "', '" + data + "', '" + descripcio + "', 0)";
 		int x = update(query);
 		query = "INSERT INTO Passwords (email, pass) VALUES ('" + user.getEmail() + "', '" + contrasenya + "');";
 		update(query);
@@ -147,6 +147,23 @@ public class Database {
 		}
 	}
 
+	public int updatePunt(String email, int p) {
+		
+		
+		ResultSet rs = query("SELECT puntuacio FROM Usuari WHERE email = '" + email + "';");
+		
+		String query;
+		try {
+			query = "UPDATE Usuari SET puntuacio = " + p + rs.getInt("puntuacio") + " WHERE email = '" + email + "';";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		}
+		
+		return update(query);
+	}
+	
 	//Usuari
 	public VOUsuario getUsuari(String email) {
 		String query = "SELECT * FROM Usuari WHERE email = '" + email + "';";
@@ -164,6 +181,12 @@ public class Database {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public int updateDescr(String email, String descripcio) {
+		
+		String query = "UPDATE Usuari SET descr = '" + descripcio + "' WHERE email = '" + email + "';";
+		return update(query);
 	}
 	
 	public int updatePassword(String email, String contrasenya) {
@@ -189,7 +212,7 @@ public class Database {
 
 	public int updateOferta(Oferta oferta) {
 		
-		String query = "UPDATE Usuari SET  adr = '" + oferta.getAdr() + "', num_cas = '" + oferta.getNumCas() + "', pob = '" + oferta.getPoblacio() + "', nivell_energetic = '" + oferta.getNivellEnergetic() + "', num_ocupants = " + oferta.getNumeroOcupants() + ", habitacions = " + oferta.getHabitacions() + ", superficie = " + oferta.getSuperficie() + ", descr = '" + oferta.getDescripcio() + "', preu = " + oferta.getPreu() + " WHERE email = '" + oferta.getEmail() + "';";
+		String query = "UPDATE Ofertes SET adr = '" + oferta.getAdr() + "', num_cas = '" + oferta.getNumCas() + "', pob = '" + oferta.getPoblacio() + "', nivell_energetic = '" + oferta.getNivellEnergetic() + "', num_ocupants = " + oferta.getNumeroOcupants() + ", habitacions = " + oferta.getHabitacions() + ", superficie = " + oferta.getSuperficie() + ", descr = '" + oferta.getDescripcio() + "', preu = " + oferta.getPreu() + " WHERE email = '" + oferta.getEmail() + "';";
 		return update(query);
 	}
 
@@ -280,7 +303,7 @@ public class Database {
 		
 		String query;
 		if (tipus.equals("perfil")) query = "UPDATE Usuari SET foto = '" + URL + "' WHERE email = '" + email + "';";
-		else if (tipus.equals("oferta")) query = "INSERT INTO ImatgesOferta (email, id, url) VALUES ('" + email + "', " + id + ", '" + URL + "');";
+		else if (tipus.equals("oferta")) query = "INSERT INTO ImatgesOferta (email, id, url) VALUES ('" + email + "', '" + id + "', '" + URL + "');";
 		else if (tipus.equals("extern")) query = "INSERT INTO ImatgesServei (id, url) VALUES ('" + email + "','" + URL + "');";
 		else query = "Fail";
 		return update(query);
@@ -290,7 +313,7 @@ public class Database {
 		
 		String query;
 		if (tipus.equals("perfil")) query = "UPDATE Usuari SET foto = '" + URL + "' WHERE email = '" + email + "';";
-		else if (tipus.equals("oferta")) query = "UPDATE ImatgesOferta SET url = '" + URL + "' WHERE email = '" + email + "' AND id = " + id + ";";
+		else if (tipus.equals("oferta")) query = "UPDATE ImatgesOferta SET url = '" + URL + "' WHERE email = '" + email + "' AND id = '" + id + "';";
 		else if (tipus.equals("extern")) query = "UPDATE ImatgesServei SET url = '" + URL + "' WHERE id = '" + email + "';";
 		else query = "Fail";
 		return update(query);
@@ -383,5 +406,89 @@ public class Database {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public int insertMatch(String email1, String email2, Boolean started) {
+		
+		if (started) {
+			
+			String query = "UPDATE Matches SET mat = 1 WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
+			if (update(query) == 1) return 1;
+			else {
+				
+				query = "UPDATE Matches SET mat = 1 WHERE email1 = '" + email2 + "' and email2 = '" + email1 + "';";
+				return update(query);
+			}
+		}
+		
+		else {
+			
+			String query = "INSERT INTO Matches (email1, email2, mat) VALUES ('" + email1 + "','" + email2 + "',0);";
+			return update(query);
+		}
+	}
+	
+	public Boolean isMatched(String email1, String email2) {
+		
+		String query = "SELECT mat FROM Matches WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
+		ResultSet rs = query(query);
+		
+		try {
+			rs.next();
+			if (rs.getInt("mat") == 1) return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		query = "SELECT mat FROM Matches WHERE email1 = '" + email2 + "' and email2 = '" + email1 + "';";
+		ResultSet rs2 = query(query);
+		
+		try {
+			rs2.next();
+			if (rs2.getInt("mat") == 1) return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public Boolean isStarted(String email1, String email2) {
+
+		String query = "SELECT mat FROM Matches WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
+		ResultSet rs = query(query);
+		
+		try {
+			rs.next();
+			if (rs.getInt("mat") == 0) return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		query = "SELECT mat FROM Matches WHERE email1 = '" + email2 + "' and email2 = '" + email1 + "';";
+		ResultSet rs2 = query(query);
+		
+		try {
+			rs2.next();
+			if (rs2.getInt("mat") == 0) return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public int deleteMatch(String email1, String email2) {
+		
+		String query = "DELETE FROM Matches WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
+				
+		if (update(query) == 1) return 1;
+		else {
+			
+			query = "DELETE FROM Matches WHERE email1 = '" + email2 + "' and email2 = '" + email1 + "';";
+			return update(query);
+		}
 	}
 }

@@ -91,10 +91,25 @@ public class ServiceLoginJR {
     }
 	
 	@POST
+	@Path("/changeDescr")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject changeDescr(JSONObject json) throws JSONException {
+		
+		JSONObject output = new JSONObject();
+		
+		Database db = Database.getInstance();
+		
+		output.put("resposta",db.updateDescr(json.getString("email"), json.getString("descr")));
+		
+		return output;
+	}
+	
+	@POST
 	@Path("/changePass")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject deleteUser(JSONObject json) throws JSONException {
+	public JSONObject changePass(JSONObject json) throws JSONException {
 		
 		JSONObject output = new JSONObject();
 		
@@ -176,4 +191,48 @@ public class ServiceLoginJR {
 		
 		return ret;
 	} 
+	
+	@POST
+	@Path("/Match")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject Match(JSONObject json) throws JSONException {
+		
+		JSONObject ret = new JSONObject();
+		Database db = Database.getInstance();
+		
+		if (db.isMatched(json.getString("email1"), json.getString("email2"))) ret.put("resposta", 0);
+		ret.put("resposta", db.insertMatch(json.getString("email1"), json.getString("email2"), db.isStarted(json.getString("email1"), json.getString("email2"))));
+		
+		return ret;
+	}
+	
+	@GET
+	@Path("/isMatched")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject isMatch(JSONObject json) throws JSONException {
+		
+		Database db = Database.getInstance();
+		JSONObject ret = new JSONObject();
+		
+		ret.put("resposta", db.isMatched(json.getString("email1"), json.getString("email2")));
+		
+		return ret;
+	} 
+	
+	@POST
+	@Path("/deleteMatch")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject deleteMatch(JSONObject json) throws JSONException {
+		
+		JSONObject ret = new JSONObject();
+		Database db = Database.getInstance();
+		
+		if (!db.isMatched(json.getString("email1"), json.getString("email2")) && !db.isStarted(json.getString("email1"), json.getString("email2"))) ret.put("resposta", 0);
+		ret.put("resposta", db.deleteMatch(json.getString("email1"), json.getString("email2")));
+		
+		return ret;
+	}
 }
