@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
@@ -473,5 +474,9 @@ public class Database {
 			query = "DELETE FROM Matches WHERE email1 = '" + email2 + "' and email2 = '" + email1 + "';";
 			return update(query);
 		}
+	}
+
+	public HashMap<String,HashMap<String,Double >> getAllPreferencies() {
+		return null;
 	}
 }

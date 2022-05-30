@@ -1,6 +1,7 @@
 package com.javarevolutions.ws.rest.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +17,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.database.Database;
-import com.javarevolutions.ws.rest.kmeans.Centroid;
-import com.javarevolutions.ws.rest.kmeans.EuclideanDistance;
-import com.javarevolutions.ws.rest.kmeans.Kmeans;
+import com.javarevolutions.ws.rest.kmeans.*;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/users")
@@ -79,14 +78,28 @@ public class ServiceLoginJR {
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
 		
+		List<Record> records;
 		
 		Database db = Database.getInstance(); 
-		ArrayList<VOUsuario> usuarios = db.getUsuarisSemblants(); 
+		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies(); 
 		
-		List<Record> records; 
+		Record record1 = new Record("Joan"); 
+		Map<String, Double> features = new HashMap<>(); //obtener valoraciones
+		features.put("limpieza", 5.);
+		features.put("carne", 3.); 
+		features.put("reggeaton", 4.); 
+		features.put("perros", 2.); 
+		features.put("gatos", 1.); 
+		features.put("verdura", 1.); 
+		features.put("fiesta", 2.); 
+		features.put("madrugar", 4.); 
+		
+		record1.setFeatures(features);
+		
+		records.add(record1);
+			
 		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,4, new EuclideanDistance(), 1000);
-		
-		
+			
 		return output; 
     }
 	
