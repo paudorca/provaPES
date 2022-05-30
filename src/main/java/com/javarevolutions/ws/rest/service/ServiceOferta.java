@@ -71,14 +71,16 @@ public class ServiceOferta {
 		return json;
 	}
 	
-	@GET
-	@Path("/deleteOferta/{email}")
+	@POST
+	@Path("/deleteOferta")
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject deleteOferta(@PathParam("email") String email) throws JSONException {
+	public JSONObject deleteOferta(JSONObject json) throws JSONException {
 		
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
-		ret.put("result", db.deleteOferta(email));
+		if(db.loginUser(json.getString("email"), json.getString("contrasenya")))  ret.put("result", db.deleteOferta(json.getString("email")));
+		else ret.put("resposta", "Incorrect Password");
+		
 		return ret;
 	}
 	
