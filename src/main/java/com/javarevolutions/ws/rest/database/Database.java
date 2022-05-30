@@ -390,23 +390,6 @@ public class Database {
 		
 		return null;
 	}
-
-	public int addLike(String like, String liked) {
-		String query = "SELECT * FROM Likes where usuari1= '" + liked + "' and usuari2 = '" + like + "';"; 
-		ResultSet rs = query(query); 
-		try {
-			while(rs.next()) {
-				String query1 = "UPDATE Likes SET reciproc = 1 where usuari1 = '" + liked + "' and usuari2 = '" + like + "'"; 
-				update(query1); 
-				return 2; 
-			}
-			query = "INSERT INTO Likes VALUES ('" + like + "', '" + liked + "',0)"; 
-			return update(query); 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
 	
 	public int insertMatch(String email1, String email2, Boolean started) {
 		

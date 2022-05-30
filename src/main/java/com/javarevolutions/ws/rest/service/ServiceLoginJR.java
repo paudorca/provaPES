@@ -136,19 +136,6 @@ public class ServiceLoginJR {
 	}
 	
 	@POST
-	@Path("/likeUser")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject addLike(JSONObject like) throws JSONException {
-		String usuari1 = like.getString("usuari1"); 
-		String usuari2 = like.getString("usuari2");
-		Database db = Database.getInstance(); 
-		int match = db.addLike(usuari1,usuari2); 
-		JSONObject output = new JSONObject(); 
-		return output.put("resultat", match); 
-	}
-	
-	@POST
 	@Path("/setGustosPersonals/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
