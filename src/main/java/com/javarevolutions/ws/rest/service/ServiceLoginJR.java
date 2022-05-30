@@ -153,15 +153,16 @@ public class ServiceLoginJR {
 	}
 	
 	@POST
-	@Path("/deleteUser/{email}")
+	@Path("/deleteUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject deleteUser(@PathParam("email") String email) throws JSONException {
+	public JSONObject deleteUser(JSONObject json) throws JSONException {
 		
 		JSONObject output = new JSONObject();
 		
 		Database db = Database.getInstance();
-		output.put("resposta",db.deleteUsuari(email));
+		if(db.loginUser(json.getString("email"), json.getString("contrasenya"))) output.put("resposta",db.deleteUsuari(json.getString("email")));
+		else output.put("resposta", "Incorrect Password");
 		
 		return output;
 	}
@@ -220,7 +221,7 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		
 		if (db.isMatched(json.getString("email1"), json.getString("email2"))) ret.put("resposta", 0);
-		ret.put("resposta", db.insertMatch(json.getString("email1"), json.getString("email2"), db.isStarted(json.getString("email1"), json.getString("email2"))));
+		else ret.put("resposta", db.insertMatch(json.getString("email1"), json.getString("email2"), db.isStarted(json.getString("email1"), json.getString("email2"))));
 		
 		return ret;
 	}

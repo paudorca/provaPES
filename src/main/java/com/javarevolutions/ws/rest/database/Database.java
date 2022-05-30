@@ -417,8 +417,9 @@ public class Database {
 		ResultSet rs = query(query);
 		
 		try {
-			rs.next();
-			if (rs.getInt("mat") == 1) return true;
+			if(rs.next()) {
+				if (rs.getInt("mat") == 1) return true;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -428,8 +429,9 @@ public class Database {
 		ResultSet rs2 = query(query);
 		
 		try {
-			rs2.next();
-			if (rs2.getInt("mat") == 1) return true;
+			if(rs2.next()){
+				if (rs2.getInt("mat") == 1) return true;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -443,8 +445,9 @@ public class Database {
 		ResultSet rs = query(query);
 		
 		try {
-			rs.next();
-			if (rs.getInt("mat") == 0) return true;
+			if(rs.next()) {
+				if (rs.getInt("mat") == 0) return true;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -454,8 +457,9 @@ public class Database {
 		ResultSet rs2 = query(query);
 		
 		try {
-			rs2.next();
-			if (rs2.getInt("mat") == 0) return true;
+			if(rs2.next()) {
+				if (rs2.getInt("mat") == 0) return true;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
