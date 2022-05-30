@@ -491,11 +491,18 @@ public class Database {
 				int Literatura = rs.getInt("Literatura"); 
 				int Oci_nocturn = rs.getInt("Oci_nocturn");
 				int Horari_laboral = rs.getInt("Horari_laboral");
-				intern.put("Animals", Animals);
-				intern.put("Musica", Animals);
-				intern.put("Menjar", Animals);
+				intern.put("Animals", (double) Animals);
+				intern.put("Musica", (double) Musica);
+				intern.put("Menjar", (double) Menjar);
+				intern.put("Esport", (double) Esport);
+				intern.put("Videojocs", (double) Videojocs);
+				intern.put("Literatura", (double) Literatura);
+				intern.put("Oci_nocturn", (double) Oci_nocturn);
+				intern.put("Horari_laboral", (double) Horari_laboral);
+				
 				resultat.put(Usuari, intern); 
 			}
+			
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();

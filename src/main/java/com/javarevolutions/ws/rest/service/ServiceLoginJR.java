@@ -2,8 +2,10 @@ package com.javarevolutions.ws.rest.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -75,34 +77,49 @@ public class ServiceLoginJR {
 		return output; 
     }
 	
+	@SuppressWarnings("null")
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
 		
-		List<Record> records;
+		List<Record> records = null;
 		
 		Database db = Database.getInstance(); 
 		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies(); 
+		Iterator<String> it = null; 
 		
-		Record record1 = new Record("Joan"); 
-		Map<String, Double> features = new HashMap<>(); //obtener valoraciones
-		features.put("limpieza", 5.);
-		features.put("carne", 3.); 
-		features.put("reggeaton", 4.); 
-		features.put("perros", 2.); 
-		features.put("gatos", 1.); 
-		features.put("verdura", 1.); 
-		features.put("fiesta", 2.); 
-		features.put("madrugar", 4.); 
-		
-		record1.setFeatures(features);
-		
-		records.add(record1);
+		it = resultat.keySet().iterator();
+		 
+		while(it.hasNext()){
+		    String clave = it.next();
+		    HashMap<String, Double> valor = resultat.get(clave);
+		    Record record = new Record(clave); 
+		    record.setFeatures(valor); 
+		    records.add(record); 
+		}
 			
-		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,4, new EuclideanDistance(), 1000);
-			
+		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,2, new EuclideanDistance(), 1000);
+		JSONObject output = new JSONObject(); 
+		clusters.forEach((key, value) -> {
+			ArrayList<String> nombres = convertListToArray(value); 
+		    try {
+				output.put("hola", nombres);
+				System.out.println("he entrado una vez"); 
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		});
 		return output; 
     }
+	
+	public ArrayList<String> convertListToArray(List<Record> llista) {
+		ArrayList<String> output = new ArrayList<String>(); 
+		for (int i = 0; i < llista.size();++i) {
+			output.add(llista.get(i).getDescription()); 
+		}
+		return output; 
+	}
 	
 	@POST
 	@Path("/changeDescr")
