@@ -395,7 +395,6 @@ public class Database {
 	public int insertMatch(String email1, String email2, Boolean started) {
 		
 		if (started) {
-			
 			String query = "UPDATE Matches SET mat = 1 WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
 			if (update(query) == 1) return 1;
 			else {
@@ -475,8 +474,32 @@ public class Database {
 			return update(query);
 		}
 	}
-
+	
 	public HashMap<String,HashMap<String,Double >> getAllPreferencies() {
+		String query = "SELECT * FROM Preferencies"; 
+		HashMap<String,HashMap<String,Double >> resultat = new HashMap<String, HashMap<String, Double>>(); 
+		ResultSet rs = query(query);
+		try {
+			while(rs.next()) {
+				HashMap<String,Double> intern = new HashMap<String, Double>(); 
+				String Usuari = rs.getString("Usuari");
+				int Animals = rs.getInt("Animals");
+				int Musica = rs.getInt("Musica"); 
+				int Menjar = rs.getInt("Menjar");
+				int Esport = rs.getInt("Esport");
+				int Videojocs = rs.getInt("Videojocs"); 
+				int Literatura = rs.getInt("Literatura"); 
+				int Oci_nocturn = rs.getInt("Oci_nocturn");
+				int Horari_laboral = rs.getInt("Horari_laboral");
+				intern.put("Animals", Animals);
+				intern.put("Musica", Animals);
+				intern.put("Menjar", Animals);
+				resultat.put(Usuari, intern); 
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }
