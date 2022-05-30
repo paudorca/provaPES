@@ -18,6 +18,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.kmeans.*;
+import com.javarevolutions.ws.rest.kmeans.Record;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
 
 @Path("/users")
@@ -135,16 +136,15 @@ public class ServiceLoginJR {
 	}
 	
 	@POST
-	@Path("/deleteUser")
+	@Path("/deleteUser/{email}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject deleteUser(JSONObject json) throws JSONException {
+	public JSONObject deleteUser(@PathParam("email") String email) throws JSONException {
 		
 		JSONObject output = new JSONObject();
 		
 		Database db = Database.getInstance();
-		if(db.loginUser(json.getString("email"), json.getString("contrasenya"))) output.put("resposta",db.deleteUsuari(json.getString("email")));
-		else output.put("resposta", "Incorrect Password");
+		output.put("resposta",db.deleteUsuari(email));
 		
 		return output;
 	}
