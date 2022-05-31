@@ -98,12 +98,6 @@ public class ServiceLoginJR {
     }
 	
 	
-	//un usuari té ofertes
-	public boolean teOfertes(String email) {
-		Database db = Database.getInstance(); 
-		return db.teOfertes(email);
-	}
-	
 	@GET
 	@Path("/getXat/{email}")
 	public JSONArray getXat(@PathParam("email") String email) throws JSONException {
@@ -139,10 +133,17 @@ public class ServiceLoginJR {
 		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
 		ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
+		if (db.teOfertes(email)) {
 			for (int i = 0; i < usuarisCluster.size();++i) {
-				 json.put(usuarisCluster.get(i)); 
-			 }
-			 return json;
+				 if (db.teOfertes(usuarisCluster.get(i)) == false) json.put(usuarisCluster.get(i)); 
+			}
+		}
+		else {
+			for (int i = 0; i < usuarisCluster.size();++i) {
+				 if (db.teOfertes(usuarisCluster.get(i))) json.put(usuarisCluster.get(i)); 
+			}
+		}
+		return json;
     }
 	
 	public ArrayList<String> convertListToArray(List<Record> llista) {
