@@ -162,7 +162,6 @@ public class Database {
 			}
 			return update(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		}
@@ -438,7 +437,6 @@ public class Database {
 				if (rs.getInt("mat") == 1) return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -450,7 +448,6 @@ public class Database {
 				if (rs2.getInt("mat") == 1) return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -466,7 +463,6 @@ public class Database {
 				if (rs.getInt("mat") == 0) return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -478,7 +474,6 @@ public class Database {
 				if (rs2.getInt("mat") == 0) return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -565,7 +560,6 @@ public class Database {
 			}
 			return xats; 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -587,7 +581,6 @@ public class Database {
 			}
 			return xats; 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -627,7 +620,6 @@ public class Database {
 			}
 		} 
 		catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		query = "SELECT email from Usuari WHERE idCluster = " + id + ";";
@@ -638,7 +630,6 @@ public class Database {
 			}
 			return noms; 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null; 
@@ -652,7 +643,6 @@ public class Database {
 				return true; 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
