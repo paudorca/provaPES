@@ -86,7 +86,6 @@ public class ServiceLoginJR {
 	public JSONObject getPreferencies(@PathParam("email") String email) throws JSONException {
 		Database db = Database.getInstance(); 
 		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies();
-		JSONObject output = new JSONObject(); 
 		JSONObject intern = new JSONObject();
 		
 		    HashMap<String, Double> valor = resultat.get(email); 
@@ -96,8 +95,7 @@ public class ServiceLoginJR {
 		    	Double nota = valor.get(clave);
 		    	intern.put(clave, nota); 
 		    }
-		    output.put(email, intern); 
-		return output; 
+		   return intern; 
     }
 	
 	@GET
