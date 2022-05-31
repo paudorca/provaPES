@@ -168,6 +168,21 @@ public class ServiceLoginJR {
 	}
 	
 	@POST
+	@Path("/addPunt")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject addPunt(JSONObject json) throws JSONException {
+		
+		JSONObject output = new JSONObject();
+		
+		Database db = Database.getInstance();
+		
+		output.put("resposta",db.updatePunt(json.getString("email"), json.getInt("puntuacio")));
+		
+		return output;
+	}
+	
+	@POST
 	@Path("/changePass")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
