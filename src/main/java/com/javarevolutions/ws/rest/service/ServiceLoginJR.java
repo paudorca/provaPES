@@ -132,7 +132,6 @@ public class ServiceLoginJR {
 		return json;
     }
 	
-	@SuppressWarnings("null")
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONArray getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
