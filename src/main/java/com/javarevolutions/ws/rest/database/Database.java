@@ -388,7 +388,14 @@ public class Database {
 		  String query = "INSERT INTO Preferencies VALUES "
 					+ "('" + email + "'," +int1 + "," + int2 + "," + int3 + "," + int4 + ","
 					  + int5 + "," + int6 + "," + int7 + "," + int8 + ");";
-		return update(query); 
+		int result = update(query);
+		if (result == -1) {
+			String query2 = "UPDATE Preferencies SET Animals = " + int1 + ",Musica = " + int2 + ",Menjar = " + int3 + ",Esport = " + 
+					int4 + ",Videojocs = " + int5 + ",Literatura = " + int6 + ",Oci_nocturn = " + int7 + ",Horari_laboral = " + int8 + 
+					" where Usuari = '" + email + "';";
+			return update(query2); 
+		}
+		return result; 
 	}
 
 	public ArrayList<VOUsuario> getUsuarisSemblants() {
