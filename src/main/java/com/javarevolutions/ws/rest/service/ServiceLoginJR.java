@@ -193,7 +193,7 @@ public class ServiceLoginJR {
 		JSONObject output = new JSONObject();
 		
 		Database db = Database.getInstance();
-		if(/*db.loginUser(json.getString("email"), json.getString("contrasenya"))*/true) output.put("resposta",db.deleteUsuari(json.getString("email")));
+		if(db.loginUser(json.getString("email"), json.getString("contrasenya"))) output.put("resposta",db.deleteUsuari(json.getString("email")));
 		else output.put("resposta", "Incorrect Password");
 		
 		return output;
