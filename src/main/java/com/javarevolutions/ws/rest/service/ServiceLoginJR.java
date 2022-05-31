@@ -265,22 +265,6 @@ public class ServiceLoginJR {
 		return ret;
 	}
 	
-	@GET
-	@Path("/getFoto/{email}")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject userGetImatge(@PathParam("email") String email) throws JSONException {
-		
-		Database db = Database.getInstance();
-		JSONObject ret = new JSONObject();
-		ArrayList<String> fotos = new ArrayList<String>();
-		fotos = db.getFotos(email, "perfil");
-		
-		ret.put("foto", "https://res.cloudinary.com/homies-image-control/image/upload/" + fotos.get(0));
-		
-		return ret;
-	} 
-	
 	@POST
 	@Path("/View")
 	@Consumes({MediaType.APPLICATION_JSON})
