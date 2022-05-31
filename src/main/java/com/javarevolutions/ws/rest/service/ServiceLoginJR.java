@@ -82,6 +82,22 @@ public class ServiceLoginJR {
     }
 	
 	@GET
+	@Path("/getPreferencies/{email}")
+	public JSONObject getPreferencies(@PathParam("email") String email) throws JSONException {
+		JSONObject output = new JSONObject(); 
+		Database db = Database.getInstance();
+		VOUsuario user = new VOUsuario();
+		user = db.getUsuari(email); 
+		output.put("email", user.getEmail()); 
+		output.put("nom", user.getNom()); 
+		output.put("edat", user.getEdat()); 
+		output.put("descripcio", user.getDescripcio()); 
+		output.put("foto", user.getFoto()); 
+		
+		return output; 
+    }
+	
+	@GET
 	@Path("/getXat/{email}")
 	public JSONArray getXat(@PathParam("email") String email) throws JSONException {
 		Database db = Database.getInstance(); 
@@ -118,7 +134,7 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance(); 
 		 ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
 		 for (int i = 0; i < usuarisCluster.size();++i) {
-			 if (email != usuarisCluster.get(i)) json.put(usu)
+			 if (email != usuarisCluster.get(i)) json.put(usuarisCluster.get(i)); 
 		 }
 		 return output; 
     }
