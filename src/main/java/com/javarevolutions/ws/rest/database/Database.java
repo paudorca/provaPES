@@ -547,7 +547,7 @@ public class Database {
 	
 	public int deletePreferences(String email) {
 		
-		String query = "DELETE FROM Preferences WHERE email = '" + email + "';";
+		String query = "DELETE FROM Preferencies WHERE Usuari = '" + email + "';";
 		return update(query);
 	}
 
