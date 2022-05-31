@@ -523,7 +523,7 @@ public class Database {
 		return update(query); 
 	}
 
-	public ArrayList<Xat> getXat(String email) {
+	public ArrayList<Xat> getXat1(String email) {
 		ArrayList<Xat> xats = new ArrayList<Xat>(); 
 		String query = "SELECT * FROM Chat where email1 = '"+ email + "';";
 		ResultSet rs = query(query);
@@ -533,8 +533,10 @@ public class Database {
 				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email2") + "';";
 				ResultSet rs1 = query(query1);
 				ResultSet rs2 = query(query2);
-				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),"hola","hola");
+				if (rs1.next() && rs2.next()) {
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString("nom"),rs2.getString("nom"));
 				xats.add(xat); 
+				} 
 			}
 			return xats; 
 		} catch (SQLException e) {
@@ -542,8 +544,7 @@ public class Database {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
+	}	
 	public ArrayList<Xat> getXat2(String email) {
 		ArrayList<Xat> xats = new ArrayList<Xat>(); 
 		String query = "SELECT * FROM Chat where email2 = '"+ email + "';";
@@ -554,8 +555,10 @@ public class Database {
 				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email1") + "';";
 				ResultSet rs1 = query(query1);
 				ResultSet rs2 = query(query2);
-				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),"hola","hola");
+				if (rs1.next() && rs2.next()) {
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString("nom"),rs2.getString("nom"));
 				xats.add(xat); 
+				} 
 			}
 			return xats; 
 		} catch (SQLException e) {
