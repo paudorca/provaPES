@@ -176,16 +176,18 @@ public class Database {
 		user.setEmail(email);
 		ResultSet rs = query(query);
 		try {
-			rs.next();
-			user.setNom(rs.getString("nom"));
-			user.setEdat(rs.getDate("data_naix").toString());
-			user.setDescripcio(rs.getString("descr"));
-			user.setFoto(rs.getString("foto"));
-			return user;
+			if(rs.next()) {
+				user.setNom(rs.getString("nom"));
+				user.setEdat(rs.getDate("data_naix").toString());
+				user.setDescripcio(rs.getString("descr"));
+				user.setFoto(rs.getString("foto"));
+				return user;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
+		return null;
 	}
 	
 	public int updateDescr(String email, String descripcio) {
