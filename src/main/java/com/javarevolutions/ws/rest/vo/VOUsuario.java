@@ -6,6 +6,7 @@ public class VOUsuario {
 	private String email;
 	private String descripcio;
 	private String foto;
+	private int punts;
 	
 	public VOUsuario() {
 		this.nom = null; 
@@ -26,7 +27,6 @@ public class VOUsuario {
 	}
 	public String getDescripcio() {
 		return descripcio;
-		
 	}
 	public void setDescripcio(String descripcio) {
 		this.descripcio = descripcio; 
@@ -40,18 +40,22 @@ public class VOUsuario {
 		
 	}
 	public String getEmail() {
-		// TODO Auto-generated method stub
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email; 
 	}
 	public String getFoto() {
-		// TODO Auto-generated method stub
 		return foto;
 	}
 	public void setFoto(String foto) {
 		if(foto == null) this.foto = "";
 		else this.foto = foto; 
+	}
+	public int getPunts() {
+		return punts;
+	}
+	public void setPunts(int punts) {
+		this.punts = punts; 
 	}
 }

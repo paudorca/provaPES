@@ -290,6 +290,7 @@ public class Database {
 				while (aux_rs.next()) {
 					if (aux_rs.getBoolean("correcte")) aux.setRespostaCorrecta(i);
 					aux_res.add(aux_rs.getString("text_res"));
+					++i;
 				}
 				
 				aux.setRespostes(aux_res);
@@ -639,7 +640,7 @@ public class Database {
 		ResultSet rs2 = query(query);
 		try {
 			while (rs2.next()) {
-				 if(!isViewed("email",rs2.getString("email")))noms.add(rs2.getString("email")); 
+				 if(/*!isViewed("email",rs2.getString("email"))*/true)noms.add(rs2.getString("email")); 
 			}
 			return noms; 
 		} catch (SQLException e) {
