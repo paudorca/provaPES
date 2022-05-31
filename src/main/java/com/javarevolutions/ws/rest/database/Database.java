@@ -386,8 +386,8 @@ public class Database {
 			int int4, int int5, int int6, int int7,
 			int int8) {
 		  String query = "INSERT INTO Preferencies VALUES "
-					+ "('" + email + "'," +int1 + "," + int2 + "," + int3 + "," + int3 + ","
-					  + int3 + "," + int3 + "," + int3 + "," + int3 + ");";
+					+ "('" + email + "'," +int1 + "," + int2 + "," + int3 + "," + int4 + ","
+					  + int5 + "," + int6 + "," + int7 + "," + int8 + ");";
 		return update(query); 
 	}
 

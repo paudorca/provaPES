@@ -83,41 +83,42 @@ public class ServiceLoginJR {
 	
 	@GET
 	@Path("/getXat/{email}")
-	public JSONObject getXat(@PathParam("email") String email) throws JSONException {
+	public JSONArray getXat(@PathParam("email") String email) throws JSONException {
 		Database db = Database.getInstance(); 
 		ArrayList<Xat> xats1 = db.getXat1(email);
-		ArrayList<Xat> xats2 = db.getXat2(email); 
-		JSONObject output = new JSONObject();
+		ArrayList<Xat> xats2 = db.getXat2(email);
+		JSONArray json = new JSONArray();  
 		for (int i = 0; i < xats1.size();++i) {
-			JSONArray json = new JSONArray(); 
-			json.put(xats1.get(i).getXatId()); 
-			json.put(xats1.get(i).getEmail1());
-			json.put(xats1.get(i).getEmail2());
-			json.put(xats1.get(i).getUsername1());
-			json.put(xats1.get(i).getUsername2());
-			output.put(i + "",json); 
+			JSONObject xat = new JSONObject();
+			xat.put("xatId",xats1.get(i).getXatId());
+			xat.put("email1",xats1.get(i).getEmail1());
+			xat.put("email2",xats1.get(i).getEmail2());
+			xat.put("username1",xats1.get(i).getUsername1());
+			xat.put("username2",xats1.get(i).getUsername2());
+			json.put(xat); 
 		}
 		for (int i = 0; i < xats2.size();++i) {
-			JSONArray json = new JSONArray(); 
-			json.put(xats2.get(i).getXatId()); 
-			json.put(xats2.get(i).getEmail1());
-			json.put(xats2.get(i).getEmail2());
-			json.put(xats2.get(i).getUsername1());
-			json.put(xats2.get(i).getUsername2());
-			output.put(i + "",json); 
+			JSONObject xat = new JSONObject();
+			xat.put("xatId",xats2.get(i).getXatId());
+			xat.put("email1",xats2.get(i).getEmail1());
+			xat.put("email2",xats2.get(i).getEmail2());
+			xat.put("username1",xats2.get(i).getUsername1());
+			xat.put("username2",xats2.get(i).getUsername2()); 
+			json.put(xat); 
 		}
-		return output;
+		return json;
     }
 	
 	@SuppressWarnings("null")
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
-		JSONObject output = new JSONObject(); 
+		JSONObject output = new JSONObject();
+		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
 		 ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
 		 for (int i = 0; i < usuarisCluster.size();++i) {
-			 if (email != usuarisCluster.get(i)) output.put(i + "",usuarisCluster.get(i)); 
+			 if (email != usuarisCluster.get(i)) json.put(usu)
 		 }
 		 return output; 
     }
