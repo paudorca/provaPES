@@ -155,16 +155,17 @@ public class Database {
 		
 		ResultSet rs = query("SELECT puntuacio FROM Usuari WHERE email = '" + email + "';");
 		
-		String query;
+		String query = "";
 		try {
-			query = "UPDATE Usuari SET puntuacio = " + p + rs.getInt("puntuacio") + " WHERE email = '" + email + "';";
+			if(rs.next()) {
+				query = "UPDATE Usuari SET puntuacio = " + p + rs.getInt("puntuacio") + " WHERE email = '" + email + "';";
+			}
+			return update(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		}
-		
-		return update(query);
 	}
 	
 	//Usuari
