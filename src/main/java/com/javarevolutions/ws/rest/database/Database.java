@@ -204,6 +204,11 @@ public class Database {
 	
 	public int deleteUsuari(String email) {
 		
+		deleteOferta(email);
+		deletePreferences(email);
+		deleteMatch(email, "delete");
+		deleteXat(email, "delete");
+		
 		
 		String query = "DELETE FROM Passwords WHERE email = '" + email + "';";
 		update(query);
@@ -482,6 +487,12 @@ public class Database {
 	
 	public int deleteMatch(String email1, String email2) {
 		
+		if(email2.equals("delete")) {
+			String del1 = "DELETE FROM Matches WHERE email1 = '" + email1 + "';";
+			String del2 = "DELETE FROM Matches WHERE email2 = '" + email1 + "';";
+			return update(del1) + update(del2);
+		}
+		
 		String query = "DELETE FROM Matches WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
 				
 		if (update(query) == 1) return 1;
@@ -525,6 +536,12 @@ public class Database {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public int deletePreferences(String email) {
+		
+		String query = "DELETE FROM Preferences WHERE email = '" + email + "';";
+		return update(query);
 	}
 
 	public int createXat(String chatId, String email1, String email2) {
@@ -575,6 +592,24 @@ public class Database {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public int deleteXat(String email1, String email2) {
+		
+		if(email2.equals("delete")) {
+			String del1 = "DELETE FROM Chat WHERE email1 = '" + email1 + "';";
+			String del2 = "DELETE FROM Chat WHERE email2 = '" + email1 + "';";
+			return update(del1) + update(del2);
+		}
+		
+		String query = "DELETE FROM Chat WHERE email1 = '" + email1 + "' and email2 = '" + email2 + "';";
+				
+		if (update(query) == 1) return 1;
+		else {
+			
+			query = "DELETE FROM Chat WHERE email1 = '" + email2 + "' and email2 = '" + email1 + "';";
+			return update(query);
+		}
 	}
 
 	public int putCluster(String nombre, int i) {
