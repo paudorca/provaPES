@@ -27,7 +27,6 @@ public class ServiceExtern {
 	@Produces({MediaType.APPLICATION_JSON})
 	public JSONObject extGetImatge(@PathParam("email") String email) throws JSONException {
 		
-	
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
 		ArrayList<String> fotos = new ArrayList<String>();

@@ -8,10 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.codehaus.jettison.json.JSONObject;
+
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
 import com.javarevolutions.ws.rest.vo.Pregunta;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
+import com.javarevolutions.ws.rest.vo.Xat;
+
 
 public class Database {
 	
@@ -382,8 +386,8 @@ public class Database {
 			int int4, int int5, int int6, int int7,
 			int int8) {
 		  String query = "INSERT INTO Preferencies VALUES "
-					+ "('" + email + "'," +int1 + "," + int2 + "," + int3 + "," + int3 + ","
-					  + int3 + "," + int3 + "," + int3 + "," + int3 + ");";
+					+ "('" + email + "'," +int1 + "," + int2 + "," + int3 + "," + int4 + ","
+					  + int5 + "," + int6 + "," + int7 + "," + int8 + ");";
 		return update(query); 
 	}
 
@@ -495,15 +499,105 @@ public class Database {
 				int Literatura = rs.getInt("Literatura"); 
 				int Oci_nocturn = rs.getInt("Oci_nocturn");
 				int Horari_laboral = rs.getInt("Horari_laboral");
-				intern.put("Animals", Animals);
-				intern.put("Musica", Animals);
-				intern.put("Menjar", Animals);
+				intern.put("Animals", (double) Animals);
+				intern.put("Musica", (double) Musica);
+				intern.put("Menjar", (double) Menjar);
+				intern.put("Esport", (double) Esport);
+				intern.put("Videojocs", (double) Videojocs);
+				intern.put("Literatura", (double) Literatura);
+				intern.put("Oci_nocturn", (double) Oci_nocturn);
+				intern.put("Horari_laboral", (double) Horari_laboral);
+				
 				resultat.put(Usuari, intern); 
 			}
+			return resultat; 
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public int createXat(String chatId, String email1, String email2) {
+		String query = "INSERT INTO Chat VALUES('"+chatId+"','"+email1+"','"+email2+"');";
+		return update(query); 
+	}
+
+	public ArrayList<Xat> getXat1(String email) {
+		ArrayList<Xat> xats = new ArrayList<Xat>(); 
+		String query = "SELECT * FROM Chat where email1 = '"+ email + "';";
+		ResultSet rs = query(query);
+		try {
+			while (rs.next()) {
+				String query1 = "SELECT nom FROM Usuari where email = '"+ email + "';"; 
+				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email2") + "';";
+				ResultSet rs1 = query(query1);
+				ResultSet rs2 = query(query2);
+				if (rs1.next() && rs2.next()) {
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString("nom"),rs2.getString("nom"));
+				xats.add(xat); 
+				} 
+			}
+			return xats; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}	
+	public ArrayList<Xat> getXat2(String email) {
+		ArrayList<Xat> xats = new ArrayList<Xat>(); 
+		String query = "SELECT * FROM Chat where email2 = '"+ email + "';";
+		ResultSet rs = query(query);
+		try {
+			while (rs.next()) {
+				String query1 = "SELECT nom FROM Usuari where email = '"+ email + "';"; 
+				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email1") + "';";
+				ResultSet rs1 = query(query1);
+				ResultSet rs2 = query(query2);
+				if (rs1.next() && rs2.next()) {
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString("nom"),rs2.getString("nom"));
+				xats.add(xat); 
+				} 
+			}
+			return xats; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int putCluster(String nombre, int i) {
+		String query = "UPDATE Usuari set idCluster = " + i + " where email = '"+ nombre +"';";
+		return update(query);
+	}
+
+	public ArrayList<String> getUsuarisMateixCluster(String email) {
+		ArrayList<String> noms = new ArrayList<String>(); 
+		String query = "select idCluster from Usuari where email = '" + email + "';";
+		ResultSet rs = query(query);
+		int id = -1; 
+		try {
+			if(rs.next()) {
+				id = rs.getInt("idCluster"); 
+			}
+		} 
+		catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		query = "select email from Usuari where idCluster = " + id + ";";
+		ResultSet rs2 = query(query);
+		try {
+			while (rs2.next()) {
+				 noms.add(rs2.getString("email")); 
+			}
+			return noms; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null; 
 	}
 }

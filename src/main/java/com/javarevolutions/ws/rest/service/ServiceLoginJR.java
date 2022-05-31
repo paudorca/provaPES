@@ -2,8 +2,10 @@ package com.javarevolutions.ws.rest.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -20,9 +23,12 @@ import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.kmeans.*;
 import com.javarevolutions.ws.rest.kmeans.Record;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
+import com.javarevolutions.ws.rest.vo.Xat;
 
 @Path("/users")
 public class ServiceLoginJR {
+	
+	private int iterador; 
 	
 	@POST
 	@Path("/createUser")
@@ -76,33 +82,54 @@ public class ServiceLoginJR {
     }
 	
 	@GET
+	@Path("/getXat/{email}")
+	public JSONArray getXat(@PathParam("email") String email) throws JSONException {
+		Database db = Database.getInstance(); 
+		ArrayList<Xat> xats1 = db.getXat1(email);
+		ArrayList<Xat> xats2 = db.getXat2(email);
+		JSONArray json = new JSONArray();  
+		for (int i = 0; i < xats1.size();++i) {
+			JSONObject xat = new JSONObject();
+			xat.put("xatId",xats1.get(i).getXatId());
+			xat.put("email1",xats1.get(i).getEmail1());
+			xat.put("email2",xats1.get(i).getEmail2());
+			xat.put("username1",xats1.get(i).getUsername1());
+			xat.put("username2",xats1.get(i).getUsername2());
+			json.put(xat); 
+		}
+		for (int i = 0; i < xats2.size();++i) {
+			JSONObject xat = new JSONObject();
+			xat.put("xatId",xats2.get(i).getXatId());
+			xat.put("email1",xats2.get(i).getEmail1());
+			xat.put("email2",xats2.get(i).getEmail2());
+			xat.put("username1",xats2.get(i).getUsername1());
+			xat.put("username2",xats2.get(i).getUsername2()); 
+			json.put(xat); 
+		}
+		return json;
+    }
+	
+	@SuppressWarnings("null")
+	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
-		
-		List<Record> records;
-		
+		JSONObject output = new JSONObject();
+		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
-		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies(); 
-		
-		Record record1 = new Record("Joan"); 
-		Map<String, Double> features = new HashMap<>(); //obtener valoraciones
-		features.put("limpieza", 5.);
-		features.put("carne", 3.); 
-		features.put("reggeaton", 4.); 
-		features.put("perros", 2.); 
-		features.put("gatos", 1.); 
-		features.put("verdura", 1.); 
-		features.put("fiesta", 2.); 
-		features.put("madrugar", 4.); 
-		
-		record1.setFeatures(features);
-		
-		records.add(record1);
-			
-		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,4, new EuclideanDistance(), 1000);
-			
-		return output; 
+		 ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
+		 for (int i = 0; i < usuarisCluster.size();++i) {
+			 if (email != usuarisCluster.get(i)) json.put(usu)
+		 }
+		 return output; 
     }
+	
+	public ArrayList<String> convertListToArray(List<Record> llista) {
+		ArrayList<String> output = new ArrayList<String>(); 
+		for (int i = 0; i < llista.size();++i) {
+			output.add(llista.get(i).getDescription()); 
+		}
+		return output; 
+	}
 	
 	@POST
 	@Path("/changeDescr")
@@ -161,7 +188,45 @@ public class ServiceLoginJR {
 				gustos.getInt("esport"),gustos.getInt("videojocs"),
 				gustos.getInt("literatura"),gustos.getInt("oci_nocturn"),gustos.getInt("horari_laboral")); 
 		output.put("resultat", result); 
+		List<Record> records = new ArrayList<Record>();
+		
+		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies(); 
+		Iterator<String> it = null; 
+		
+		it = resultat.keySet().iterator();
+		 
+		while(it.hasNext()){
+		    String clave = it.next();
+		    HashMap<String, Double> valor = resultat.get(clave);
+		    Record record = new Record(clave); 
+		    record.setFeatures(valor); 
+		    records.add(record); 
+		}
+		iterador = 1; 
+		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,2, new EuclideanDistance(), 1000);
+		clusters.forEach((key, value) -> {
+			ArrayList<String> nombres = convertListToArray(value);
+			for (int j = 0; j < nombres.size();++j) {
+				String nombre = nombres.get(j);
+				db.putCluster(nombre,iterador); 
+			}
+			++iterador; 
+		}); 
 		return output;
+	}
+	
+	@POST
+	@Path("/postXat")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject creaXat(JSONObject json) throws JSONException {
+		
+		JSONObject ret = new JSONObject();
+		Database db = Database.getInstance();
+		int result = db.createXat(json.getString("chatId"),
+				json.getString("email1"),json.getString("email2"));
+		ret.put("result", result); 
+		return ret; 
 	}
 	
 	@POST
