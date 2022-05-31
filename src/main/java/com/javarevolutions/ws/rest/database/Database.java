@@ -533,9 +533,10 @@ public class Database {
 				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email2") + "';";
 				ResultSet rs1 = query(query1);
 				ResultSet rs2 = query(query2);
-				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString(0),rs2.getString(0));
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),"hola","hola");
 				xats.add(xat); 
 			}
+			return xats; 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -553,9 +554,10 @@ public class Database {
 				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email1") + "';";
 				ResultSet rs1 = query(query1);
 				ResultSet rs2 = query(query2);
-				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString(0),rs2.getString(0));
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),"hola","hola");
 				xats.add(xat); 
 			}
+			return xats; 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

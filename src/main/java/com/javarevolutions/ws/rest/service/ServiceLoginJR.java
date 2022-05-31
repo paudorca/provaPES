@@ -83,8 +83,8 @@ public class ServiceLoginJR {
 	@Path("/getXat/{email}")
 	public JSONObject getXat(@PathParam("email") String email) throws JSONException {
 		Database db = Database.getInstance(); 
-		ArrayList<Xat> xats1 = db.getXat(email); 
-		ArrayList<Xat> xats2 = db.getXat2(email);
+		ArrayList<Xat> xats1 = db.getXat(email);
+		ArrayList<Xat> xats2 = db.getXat(email); 
 		JSONObject output = new JSONObject();
 		for (int i = 0; i < xats1.size();++i) {
 			JSONArray json = new JSONArray(); 
