@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -22,6 +23,7 @@ import com.javarevolutions.ws.rest.database.Database;
 import com.javarevolutions.ws.rest.kmeans.*;
 import com.javarevolutions.ws.rest.kmeans.Record;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
+import com.javarevolutions.ws.rest.vo.Xat;
 
 @Path("/users")
 public class ServiceLoginJR {
@@ -75,6 +77,34 @@ public class ServiceLoginJR {
 		output.put("foto", user.getFoto()); 
 		
 		return output; 
+    }
+	
+	@GET
+	@Path("/getXat/{email}")
+	public JSONObject getXat(@PathParam("email") String email) throws JSONException {
+		Database db = Database.getInstance(); 
+		ArrayList<Xat> xats1 = db.getXat(email); 
+		ArrayList<Xat> xats2 = db.getXat2(email);
+		JSONObject output = new JSONObject();
+		for (int i = 0; i < xats1.size();++i) {
+			JSONArray json = new JSONArray(); 
+			json.put(xats1.get(i).getXatId()); 
+			json.put(xats1.get(i).getEmail1());
+			json.put(xats1.get(i).getEmail2());
+			json.put(xats1.get(i).getUsername1());
+			json.put(xats1.get(i).getUsername2());
+			output.put(i + "",json); 
+		}
+		for (int i = 0; i < xats2.size();++i) {
+			JSONArray json = new JSONArray(); 
+			json.put(xats2.get(i).getXatId()); 
+			json.put(xats2.get(i).getEmail1());
+			json.put(xats2.get(i).getEmail2());
+			json.put(xats2.get(i).getUsername1());
+			json.put(xats2.get(i).getUsername2());
+			output.put(i + "",json); 
+		}
+		return output;
     }
 	
 	@SuppressWarnings("null")
@@ -179,6 +209,20 @@ public class ServiceLoginJR {
 				gustos.getInt("literatura"),gustos.getInt("oci_nocturn"),gustos.getInt("horari_laboral")); 
 		output.put("resultat", result); 
 		return output;
+	}
+	
+	@POST
+	@Path("/postXat")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject creaXat(JSONObject json) throws JSONException {
+		
+		JSONObject ret = new JSONObject();
+		Database db = Database.getInstance();
+		int result = db.createXat(json.getString("chatId"),
+				json.getString("email1"),json.getString("email2"));
+		ret.put("result", result); 
+		return ret; 
 	}
 	
 	@POST

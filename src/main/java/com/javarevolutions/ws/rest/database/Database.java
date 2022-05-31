@@ -8,10 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.codehaus.jettison.json.JSONObject;
+
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
 import com.javarevolutions.ws.rest.vo.Pregunta;
 import com.javarevolutions.ws.rest.vo.VOUsuario;
+import com.javarevolutions.ws.rest.vo.Xat;
+
 
 public class Database {
 	
@@ -509,6 +513,51 @@ public class Database {
 			
 		} 
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int createXat(String chatId, String email1, String email2) {
+		String query = "INSERT INTO Chat VALUES('"+chatId+"','"+email1+"','"+email2+"');";
+		return update(query); 
+	}
+
+	public ArrayList<Xat> getXat(String email) {
+		ArrayList<Xat> xats = new ArrayList<Xat>(); 
+		String query = "SELECT * FROM Chat where email1 = '"+ email + "';";
+		ResultSet rs = query(query);
+		try {
+			while (rs.next()) {
+				String query1 = "SELECT nom FROM Usuari where email = '"+ email + "';"; 
+				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email2") + "';";
+				ResultSet rs1 = query(query1);
+				ResultSet rs2 = query(query2);
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString(0),rs2.getString(0));
+				xats.add(xat); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Xat> getXat2(String email) {
+		ArrayList<Xat> xats = new ArrayList<Xat>(); 
+		String query = "SELECT * FROM Chat where email2 = '"+ email + "';";
+		ResultSet rs = query(query);
+		try {
+			while (rs.next()) {
+				String query1 = "SELECT nom FROM Usuari where email = '"+ email + "';"; 
+				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email1") + "';";
+				ResultSet rs1 = query(query1);
+				ResultSet rs2 = query(query2);
+				Xat xat = new Xat(rs.getString("chatId"),email,rs.getString("email2"),rs1.getString(0),rs2.getString(0));
+				xats.add(xat); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
