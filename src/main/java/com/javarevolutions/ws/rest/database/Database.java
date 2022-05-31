@@ -402,11 +402,6 @@ public class Database {
 		}
 		return result; 
 	}
-
-	public ArrayList<VOUsuario> getUsuarisSemblants() {
-		
-		return null;
-	}
 	
 	public int insertMatch(String email1, String email2, Boolean started) {
 		
@@ -645,7 +640,7 @@ public class Database {
 		ResultSet rs2 = query(query);
 		try {
 			while (rs2.next()) {
-				 noms.add(rs2.getString("email")); 
+				 if(!isViewed("email",rs2.getString("email")))noms.add(rs2.getString("email")); 
 			}
 			return noms; 
 		} catch (SQLException e) {
