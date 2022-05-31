@@ -84,16 +84,19 @@ public class ServiceLoginJR {
 	@GET
 	@Path("/getPreferencies/{email}")
 	public JSONObject getPreferencies(@PathParam("email") String email) throws JSONException {
+		Database db = Database.getInstance(); 
+		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies();
 		JSONObject output = new JSONObject(); 
-		Database db = Database.getInstance();
-		VOUsuario user = new VOUsuario();
-		user = db.getUsuari(email); 
-		output.put("email", user.getEmail()); 
-		output.put("nom", user.getNom()); 
-		output.put("edat", user.getEdat()); 
-		output.put("descripcio", user.getDescripcio()); 
-		output.put("foto", user.getFoto()); 
+		JSONObject intern = new JSONObject();
 		
+		    HashMap<String, Double> valor = resultat.get(email); 
+		    Iterator<String> it = valor.keySet().iterator();
+		    while (it.hasNext()) {
+		    	String clave = it.next(); 
+		    	Double nota = valor.get(clave);
+		    	intern.put(clave, nota); 
+		    }
+		    output.put(email, intern); 
 		return output; 
     }
 	
