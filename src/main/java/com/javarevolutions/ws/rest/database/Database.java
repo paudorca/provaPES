@@ -510,7 +510,7 @@ public class Database {
 				
 				resultat.put(Usuari, intern); 
 			}
-			
+			return resultat; 
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -566,5 +566,38 @@ public class Database {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public int putCluster(String nombre, int i) {
+		String query = "UPDATE Usuari set idCluster = " + i + " where email = '"+ nombre +"';";
+		return update(query);
+	}
+
+	public ArrayList<String> getUsuarisMateixCluster(String email) {
+		ArrayList<String> noms = new ArrayList<String>(); 
+		String query = "select idCluster from Usuari where email = '" + email + "';";
+		ResultSet rs = query(query);
+		int id = -1; 
+		try {
+			if(rs.next()) {
+				id = rs.getInt("idCluster"); 
+			}
+		} 
+		catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		query = "select email from Usuari where idCluster = " + id + ";";
+		ResultSet rs2 = query(query);
+		try {
+			while (rs2.next()) {
+				 noms.add(rs2.getString("email")); 
+			}
+			return noms; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null; 
 	}
 }

@@ -28,6 +28,8 @@ import com.javarevolutions.ws.rest.vo.Xat;
 @Path("/users")
 public class ServiceLoginJR {
 	
+	private int iterador; 
+	
 	@POST
 	@Path("/createUser")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -111,36 +113,13 @@ public class ServiceLoginJR {
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
-		
-		List<Record> records = null;
-		
-		Database db = Database.getInstance(); 
-		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies(); 
-		Iterator<String> it = null; 
-		
-		it = resultat.keySet().iterator();
-		 
-		while(it.hasNext()){
-		    String clave = it.next();
-		    HashMap<String, Double> valor = resultat.get(clave);
-		    Record record = new Record(clave); 
-		    record.setFeatures(valor); 
-		    records.add(record); 
-		}
-			
-		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,2, new EuclideanDistance(), 1000);
 		JSONObject output = new JSONObject(); 
-		clusters.forEach((key, value) -> {
-			ArrayList<String> nombres = convertListToArray(value); 
-		    try {
-				output.put("hola", nombres);
-				System.out.println("he entrado una vez"); 
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-		});
-		return output; 
+		Database db = Database.getInstance(); 
+		 ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
+		 for (int i = 0; i < usuarisCluster.size();++i) {
+			 if (email != usuarisCluster.get(i)) output.put(i + "",usuarisCluster.get(i)); 
+		 }
+		 return output; 
     }
 	
 	public ArrayList<String> convertListToArray(List<Record> llista) {
@@ -208,6 +187,30 @@ public class ServiceLoginJR {
 				gustos.getInt("esport"),gustos.getInt("videojocs"),
 				gustos.getInt("literatura"),gustos.getInt("oci_nocturn"),gustos.getInt("horari_laboral")); 
 		output.put("resultat", result); 
+		List<Record> records = new ArrayList<Record>();
+		
+		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies(); 
+		Iterator<String> it = null; 
+		
+		it = resultat.keySet().iterator();
+		 
+		while(it.hasNext()){
+		    String clave = it.next();
+		    HashMap<String, Double> valor = resultat.get(clave);
+		    Record record = new Record(clave); 
+		    record.setFeatures(valor); 
+		    records.add(record); 
+		}
+		iterador = 1; 
+		Map<Centroid, List<Record>> clusters = Kmeans.fit(records,2, new EuclideanDistance(), 1000);
+		clusters.forEach((key, value) -> {
+			ArrayList<String> nombres = convertListToArray(value);
+			for (int j = 0; j < nombres.size();++j) {
+				String nombre = nombres.get(j);
+				db.putCluster(nombre,iterador); 
+			}
+			++iterador; 
+		}); 
 		return output;
 	}
 	
