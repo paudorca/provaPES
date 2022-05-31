@@ -129,15 +129,14 @@ public class ServiceLoginJR {
 	@SuppressWarnings("null")
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
-	public JSONObject getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
-		JSONObject output = new JSONObject();
+	public JSONArray getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
 		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
 		 ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
 		 for (int i = 0; i < usuarisCluster.size();++i) {
 			 if (email != usuarisCluster.get(i)) json.put(usuarisCluster.get(i)); 
 		 }
-		 return output; 
+		 return json; 
     }
 	
 	public ArrayList<String> convertListToArray(List<Record> llista) {
