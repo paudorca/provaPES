@@ -248,7 +248,7 @@ public class Database {
 	}
 	
 	public int deleteOferta(String email) {
-		
+		deleteFotos(email,"oferta");
 		String query = "DELETE FROM Ofertes WHERE email = '" + email + "';";
 		return update(query);
 	}

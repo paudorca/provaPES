@@ -114,7 +114,7 @@ public class ServiceLoginJR {
 		
 		Database db = Database.getInstance();
 		
-		output.put("resposta",db.updateDescr(json.getString("email"), json.getString("descr")));
+		output.put("resposta",db.updateDescr(json.getString("email"), json.getString("descripcio")));
 		
 		return output;
 	}
@@ -203,7 +203,8 @@ public class ServiceLoginJR {
 		JSONObject ret = new JSONObject();
 		Database db = Database.getInstance();
 		
-		if (db.isMatched(json.getString("email1"), json.getString("email2"))) ret.put("resposta", 0);
+		if (db.isMatched(json.getString("email1"), json.getString("email2"))) ret.put("resposta", -1);
+		else if (db.isStarted(json.getString("email1"), json.getString("email2")) && db.insertMatch(json.getString("email1"), json.getString("email2"), db.isStarted(json.getString("email1"), json.getString("email2"))) == 1) ret.put("resposta", 0);
 		else ret.put("resposta", db.insertMatch(json.getString("email1"), json.getString("email2"), db.isStarted(json.getString("email1"), json.getString("email2"))));
 		
 		return ret;

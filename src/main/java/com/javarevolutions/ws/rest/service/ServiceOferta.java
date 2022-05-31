@@ -78,7 +78,7 @@ public class ServiceOferta {
 		
 		Database db = Database.getInstance();
 		JSONObject ret = new JSONObject();
-		if(db.loginUser(json.getString("email"), json.getString("contrasenya")))  ret.put("result", db.deleteOferta(json.getString("email")));
+		if(db.loginUser(json.getString("email"), json.getString("contrasenya")))  ret.put("resposta", db.deleteOferta(json.getString("email")));
 		else ret.put("resposta", "Incorrect Password");
 		
 		return ret;
