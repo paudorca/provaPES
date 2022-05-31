@@ -497,6 +497,25 @@ public class Database {
 		}
 	}
 	
+	public int insertViewed(String email, String viewed) {
+		String query = "INSERT INTO Views (email, viewed) VALUES ('" + email + "', '" + viewed + "');";
+		return update(query);
+	}
+	
+	private Boolean isViewed(String email, String viewed) {
+		String query = "SELECT * FROM Views WHERE email = '" + email + "' AND viewed = '" + viewed + "');";
+		ResultSet rs = query(query);
+		try {
+			if(rs.next()) {
+				return true;
+			}
+			else return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public HashMap<String,HashMap<String,Double >> getAllPreferencies() {
 		String query = "SELECT * FROM Preferencies"; 
 		HashMap<String,HashMap<String,Double >> resultat = new HashMap<String, HashMap<String, Double>>(); 

@@ -282,6 +282,19 @@ public class ServiceLoginJR {
 	} 
 	
 	@POST
+	@Path("/View")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public JSONObject insertViewed(JSONObject json) throws JSONException {
+		
+		Database db = Database.getInstance();
+		JSONObject ret = new JSONObject();
+		
+		ret.put("resposta", db.insertViewed(json.getString("email"), json.getString("viewed")));		
+		return ret;
+	}
+	
+	@POST
 	@Path("/Match")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
