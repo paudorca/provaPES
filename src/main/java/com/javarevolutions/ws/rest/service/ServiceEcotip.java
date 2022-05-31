@@ -58,9 +58,9 @@ public class ServiceEcotip {
 	@GET
     @Path("/getQuiz/{idQuiz}")
 	@Produces({MediaType.APPLICATION_JSON})
-    public JSONObject getQuiz(@PathParam("idQuiz") int idQuiz) throws JSONException {
+    public JSONArray getQuiz(@PathParam("idQuiz") int idQuiz) throws JSONException {
         Database db = Database.getInstance();
-        JSONObject json = new JSONObject();
+        JSONArray json = new JSONArray();
         ArrayList<Pregunta> preguntes= new ArrayList<Pregunta>();
 		preguntes = db.getPreguntes(idQuiz);
 		for (int i = 0; i < preguntes.size(); ++i) {
@@ -75,6 +75,7 @@ public class ServiceEcotip {
         	}
         	individual.put("respostes",jsonRespostes); 
         	individual.put("respostaCorrecta",p.getRespostaCorrecta()); 
+        	json.put(individual);
         }
         return json;
     }

@@ -202,11 +202,10 @@ public class Database {
 	
 	public int deleteUsuari(String email) {
 		
+		deleteXat(email, "delete");
+		deleteMatch(email, "delete");
 		deleteOferta(email);
 		deletePreferences(email);
-		deleteMatch(email, "delete");
-		deleteXat(email, "delete");
-		
 		
 		String query = "DELETE FROM Passwords WHERE email = '" + email + "';";
 		update(query);
