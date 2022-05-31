@@ -551,12 +551,12 @@ public class Database {
 
 	public ArrayList<Xat> getXat1(String email) {
 		ArrayList<Xat> xats = new ArrayList<Xat>(); 
-		String query = "SELECT * FROM Chat where email1 = '"+ email + "';";
+		String query = "SELECT * FROM Chat WHERE email1 = '"+ email + "';";
 		ResultSet rs = query(query);
 		try {
 			while (rs.next()) {
-				String query1 = "SELECT nom FROM Usuari where email = '"+ email + "';"; 
-				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email2") + "';";
+				String query1 = "SELECT nom FROM Usuari WHERE email = '"+ email + "';"; 
+				String query2 = "SELECT nom FROM Usuari WHERE email = '"+ rs.getString("email2") + "';";
 				ResultSet rs1 = query(query1);
 				ResultSet rs2 = query(query2);
 				if (rs1.next() && rs2.next()) {
@@ -573,12 +573,12 @@ public class Database {
 	}	
 	public ArrayList<Xat> getXat2(String email) {
 		ArrayList<Xat> xats = new ArrayList<Xat>(); 
-		String query = "SELECT * FROM Chat where email2 = '"+ email + "';";
+		String query = "SELECT * FROM Chat WHERE email2 = '"+ email + "';";
 		ResultSet rs = query(query);
 		try {
 			while (rs.next()) {
-				String query1 = "SELECT nom FROM Usuari where email = '"+ email + "';"; 
-				String query2 = "SELECT nom FROM Usuari where email = '"+ rs.getString("email1") + "';";
+				String query1 = "SELECT nom FROM Usuari WHERE email = '"+ email + "';"; 
+				String query2 = "SELECT nom FROM Usuari WHERE email = '"+ rs.getString("email1") + "';";
 				ResultSet rs1 = query(query1);
 				ResultSet rs2 = query(query2);
 				if (rs1.next() && rs2.next()) {
@@ -613,13 +613,13 @@ public class Database {
 	}
 
 	public int putCluster(String nombre, int i) {
-		String query = "UPDATE Usuari set idCluster = " + i + " where email = '"+ nombre +"';";
+		String query = "UPDATE Usuari set idCluster = " + i + " WHERE email = '"+ nombre +"';";
 		return update(query);
 	}
 
 	public ArrayList<String> getUsuarisMateixCluster(String email) {
 		ArrayList<String> noms = new ArrayList<String>(); 
-		String query = "select idCluster from Usuari where email = '" + email + "';";
+		String query = "SELECT idCluster from Usuari WHERE email = '" + email + "';";
 		ResultSet rs = query(query);
 		int id = -1; 
 		try {
@@ -631,7 +631,7 @@ public class Database {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		query = "select email from Usuari where idCluster = " + id + ";";
+		query = "SELECT email from Usuari WHERE idCluster = " + id + ";";
 		ResultSet rs2 = query(query);
 		try {
 			while (rs2.next()) {
@@ -646,7 +646,7 @@ public class Database {
 	}
 
 	public boolean teOfertes(String email) {
-		String query = "select * from Ofertes where email = '" + email + "';"; 
+		String query = "SELECT * from Ofertes WHERE email = '" + email + "';"; 
 		ResultSet rs = query(query); 
 		try {
 			if (rs.next()) {
