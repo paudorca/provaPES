@@ -139,18 +139,10 @@ public class ServiceLoginJR {
 		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
 		ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
-		if (teOfertes(email)) {
 			for (int i = 0; i < usuarisCluster.size();++i) {
-				 if (!teOfertes(usuarisCluster.get(i))) json.put(usuarisCluster.get(i)); 
+				 json.put(usuarisCluster.get(i)); 
 			 }
 			 return json;
-		}
-		else {
-			for (int i = 0; i < usuarisCluster.size();++i) {
-				 if (teOfertes(usuarisCluster.get(i))) json.put(usuarisCluster.get(i)); 
-			 }
-			 return json;
-		}
     }
 	
 	public ArrayList<String> convertListToArray(List<Record> llista) {
