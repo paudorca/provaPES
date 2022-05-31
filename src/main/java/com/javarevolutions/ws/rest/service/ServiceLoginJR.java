@@ -98,12 +98,6 @@ public class ServiceLoginJR {
     }
 	
 	
-	//un usuari té ofertes
-	public boolean teOfertes(String email) {
-		Database db = Database.getInstance(); 
-		return db.teOfertes(email);
-	}
-	
 	@GET
 	@Path("/getXat/{email}")
 	public JSONArray getXat(@PathParam("email") String email) throws JSONException {
@@ -132,16 +126,24 @@ public class ServiceLoginJR {
 		return json;
     }
 	
+	@SuppressWarnings("null")
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONArray getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
 		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
 		ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
+		if (db.teOfertes(email)) {
 			for (int i = 0; i < usuarisCluster.size();++i) {
-				 json.put(usuarisCluster.get(i)); 
-			 }
-			 return json;
+				 if (db.teOfertes(usuarisCluster.get(i)) == false) json.put(usuarisCluster.get(i)); 
+			}
+		}
+		else {
+			for (int i = 0; i < usuarisCluster.size();++i) {
+				 if (db.teOfertes(usuarisCluster.get(i))) json.put(usuarisCluster.get(i)); 
+			}
+		}
+		return json;
     }
 	
 	public ArrayList<String> convertListToArray(List<Record> llista) {
@@ -163,21 +165,6 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		
 		output.put("resposta",db.updateDescr(json.getString("email"), json.getString("descripcio")));
-		
-		return output;
-	}
-	
-	@POST
-	@Path("/addPunt")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject addPunt(JSONObject json) throws JSONException {
-		
-		JSONObject output = new JSONObject();
-		
-		Database db = Database.getInstance();
-		
-		output.put("resposta",db.updatePunt(json.getString("email"), json.getInt("puntuacio")));
 		
 		return output;
 	}
