@@ -607,4 +607,18 @@ public class Database {
 		}
 		return null; 
 	}
+
+	public boolean teOfertes(String email) {
+		String query = "select * from Ofertes where email = '" + email + "';"; 
+		ResultSet rs = query(query); 
+		try {
+			if (rs.next()) {
+				return true; 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

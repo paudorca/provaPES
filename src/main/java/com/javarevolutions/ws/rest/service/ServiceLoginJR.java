@@ -87,7 +87,7 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance(); 
 		HashMap<String,HashMap<String,Double >> resultat = db.getAllPreferencies();
 		JSONObject intern = new JSONObject();
-		
+			
 		    HashMap<String, Double> valor = resultat.get(email); 
 		    Iterator<String> it = valor.keySet().iterator();
 		    while (it.hasNext()) {
@@ -97,6 +97,13 @@ public class ServiceLoginJR {
 		    }
 		   return intern; 
     }
+	
+	
+	//un usuari té ofertes
+	public boolean teOfertes(String email) {
+		Database db = Database.getInstance(); 
+		return db.teOfertes(email);
+	}
 	
 	@GET
 	@Path("/getXat/{email}")
@@ -132,11 +139,19 @@ public class ServiceLoginJR {
 	public JSONArray getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
 		JSONArray json = new JSONArray();
 		Database db = Database.getInstance(); 
-		 ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
-		 for (int i = 0; i < usuarisCluster.size();++i) {
-			 if (email != usuarisCluster.get(i)) json.put(usuarisCluster.get(i)); 
-		 }
-		 return json; 
+		ArrayList<String> usuarisCluster = db.getUsuarisMateixCluster(email);
+		if (teOfertes(email)) {
+			for (int i = 0; i < usuarisCluster.size();++i) {
+				 if (!teOfertes(usuarisCluster.get(i))) json.put(usuarisCluster.get(i)); 
+			 }
+			 return json;
+		}
+		else {
+			for (int i = 0; i < usuarisCluster.size();++i) {
+				 if (teOfertes(usuarisCluster.get(i))) json.put(usuarisCluster.get(i)); 
+			 }
+			 return json;
+		}
     }
 	
 	public ArrayList<String> convertListToArray(List<Record> llista) {
