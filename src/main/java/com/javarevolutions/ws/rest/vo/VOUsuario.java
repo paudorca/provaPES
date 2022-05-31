@@ -51,6 +51,7 @@ public class VOUsuario {
 		return foto;
 	}
 	public void setFoto(String foto) {
-		this.foto = foto; 
+		if(foto.equals(null)) this.foto = "";
+		else this.foto = foto; 
 	}
 }
