@@ -126,6 +126,7 @@ public class ServiceLoginJR {
 		return json;
     }
 	
+	@SuppressWarnings("null")
 	@GET
 	@Path("/getUsuarisSemblants/{email}")
 	public JSONArray getUsuarisSemblants(@PathParam("email") String email) throws JSONException {
@@ -164,21 +165,6 @@ public class ServiceLoginJR {
 		Database db = Database.getInstance();
 		
 		output.put("resposta",db.updateDescr(json.getString("email"), json.getString("descripcio")));
-		
-		return output;
-	}
-	
-	@POST
-	@Path("/addPunt")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public JSONObject addPunt(JSONObject json) throws JSONException {
-		
-		JSONObject output = new JSONObject();
-		
-		Database db = Database.getInstance();
-		
-		output.put("resposta",db.updatePunt(json.getString("email"), json.getInt("puntuacio")));
 		
 		return output;
 	}
