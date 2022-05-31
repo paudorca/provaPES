@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.codehaus.jettison.json.JSONObject;
-
 import com.javarevolutions.ws.rest.vo.Ecotip;
 import com.javarevolutions.ws.rest.vo.Oferta;
 import com.javarevolutions.ws.rest.vo.Pregunta;
