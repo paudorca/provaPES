@@ -75,7 +75,8 @@ public class ServiceLoginJR {
 		output.put("nom", user.getNom()); 
 		output.put("edat", user.getEdat()); 
 		output.put("descripcio", user.getDescripcio()); 
-		output.put("foto", user.getFoto()); 
+		output.put("foto", user.getFoto());  
+		output.put("punts", user.getPunts()); 
 		
 		return output; 
     }

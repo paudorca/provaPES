@@ -498,7 +498,7 @@ public class Database {
 	}
 	
 	private Boolean isViewed(String email, String viewed) {
-		String query = "SELECT * FROM Views WHERE email = '" + email + "' AND viewed = '" + viewed + "');";
+		String query = "SELECT * FROM Views WHERE email = '" + email + "' AND viewed = '" + viewed + "';";
 		ResultSet rs = query(query);
 		try {
 			if(rs.next()) {
@@ -640,7 +640,7 @@ public class Database {
 		ResultSet rs2 = query(query);
 		try {
 			while (rs2.next()) {
-				 if(/*!isViewed("email",rs2.getString("email"))*/true)noms.add(rs2.getString("email")); 
+				 if(!isViewed("email",rs2.getString("email")))noms.add(rs2.getString("email")); 
 			}
 			return noms; 
 		} catch (SQLException e) {
